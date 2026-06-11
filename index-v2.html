@@ -4,1725 +4,675 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>厦门数据要素产业园 · 建设进展与规划汇报</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@300;400;500;600&family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
-  :root{
-    /* ============ 主题色(🌀 靛蓝瓷) ============ */
-    --ink:#0a1f3d;
-    --ink-rgb:10,31,61;
-    --paper:#f1f3f5;
-    --paper-rgb:241,243,245;
-    --paper-tint:#e4e8ec;
-    --ink-tint:#152a4a;
-
-    /* ============ 字体(跨主题固定) ============ */
-    --mono:"IBM Plex Mono",ui-monospace,monospace;
-    --serif-en:"Playfair Display","Source Serif 4",Georgia,serif;
-    --serif-body-en:"Source Serif 4",Georgia,serif;
-    --serif-zh:"Noto Serif SC",source-han-serif-sc,serif;
-    --sans-zh:"Noto Sans SC",source-han-sans-sc,sans-serif;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{width:100%;height:100%;overflow:hidden;background:var(--ink);color:var(--paper);font-family:var(--sans-zh);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-  
-[data-anim] {
-  animation: none !important;
-  transition: none !important;
-  opacity: 1 !important;
-  transform: none !important;
+:root{
+  --ink:#0a1f3d;
+  --ink-rgb:10,31,61;
+  --paper:#f1f3f5;
+  --paper-rgb:241,243,245;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --serif-zh:"Noto Serif SC","STSong","SimSun",serif;
+  --sans-zh:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --serif-en:Georgia,"Times New Roman",serif;
 }
-* {
-  text-shadow: none !important;
-  box-shadow: none !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#0a1f3d;color:#f1f3f5;font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;-webkit-font-smoothing:antialiased}
+
+/* === Deck === */
+#deck{position:fixed;inset:0;display:flex;width:100vw;height:100vh;overflow:hidden}
+.slide{
+  width:100vw;height:100vh;flex:0 0 100vw;
+  padding:4vh 6vw 9vh 6vw;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  position:absolute;top:0;left:0;
+  will-change:transform;
+  transition:none;
 }
-  /* ============ WebGL 双背景 ============ */
-  canvas.bg{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block;transition:opacity 1.2s ease}
-  canvas#bg-light{opacity:0}
-  canvas#bg-dark{opacity:1}
-  body.light-bg canvas#bg-light{opacity:1}
-  body.light-bg canvas#bg-dark{opacity:0}
-  
-  /* ============ Deck 容器 + 翻页 ============ */
-  #deck{position:fixed;inset:0;width:2000vw;height:100vh;display:flex;flex-wrap:nowrap;transition:transform .9s cubic-bezier(.77,0,.175,1);z-index:10;will-change:transform}
-  .slide{width:100vw;height:100vh;flex:0 0 100vw;position:relative;padding:6vh 6vw 10vh 6vw;display:flex;flex-direction:column;overflow:hidden}
-  .slide.light{color:var(--ink);background:var(--paper)}
-  .slide.dark{color:var(--paper);background:var(--ink)}
-  
-  /* 默认页：遮罩较厚，保证文字可读 */
-  .slide::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;transition:background .7s ease}
-  .slide.light::before{background:rgba(var(--paper-rgb),.78);backdrop-filter:blur(3px)}
-  .slide.dark::before{background:rgba(var(--ink-rgb),.78);backdrop-filter:blur(3px)}
-  /* Hero 页：遮罩大幅降低，让 WebGL 背景明显透出 */
-  .slide.hero.light::before{background:rgba(var(--paper-rgb),.16);backdrop-filter:none}
-  .slide.hero.dark::before{background:rgba(var(--ink-rgb),.12);backdrop-filter:none}
-  /* Hero 页顶底微弱渐隐，保证 chrome/foot 区域可读 */
-  .slide.hero::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none}
-  .slide.hero.light::after{background:linear-gradient(180deg,rgba(var(--paper-rgb),.28) 0%,rgba(var(--paper-rgb),0) 14%,rgba(var(--paper-rgb),0) 86%,rgba(var(--paper-rgb),.28) 100%)}
-  .slide.hero.dark::after{background:linear-gradient(180deg,rgba(var(--ink-rgb),.32) 0%,rgba(var(--ink-rgb),0) 14%,rgba(var(--ink-rgb),0) 86%,rgba(var(--ink-rgb),.32) 100%)}
-  
-  /* ============ Magazine chrome：顶部 meta + 底部 foot ============ */
-  .chrome{display:flex;justify-content:space-between;align-items:flex-start;font-family:var(--mono);font-size:16px;letter-spacing:.18em;text-transform:uppercase;opacity:.7}
-  .chrome .left,.chrome .right{display:flex;gap:2.4em;align-items:center}
-  .chrome .sep{width:40px;height:1px;background:currentColor;opacity:.4}
-  .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;font-family:var(--mono);font-size:16px;letter-spacing:.14em;text-transform:uppercase;opacity:.55}
-  .foot .title{font-family:var(--serif-zh);font-weight:400;letter-spacing:.05em;text-transform:none;opacity:.75;font-size:13px}
-  
-  .tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;padding:6px 14px;border:1px solid currentColor;opacity:.85}
-  .rule{width:100%;height:1px;background:currentColor;opacity:.25;margin:3vh 0}
-  .rule.v{width:1px;height:100%;margin:0}
-  
-  /* ============ 字体规则 ============
-     · 衬线（Noto Serif SC / Playfair）：大标题、重点金句、数字
-     · 非衬线（Noto Sans SC）：正文描述、body、补充说明
-     · 等宽（IBM Plex Mono）：kicker、meta 小标签、foot 右侧
-  */
-  .kicker{font-family:var(--mono);font-size:16px;letter-spacing:.3em;text-transform:uppercase;opacity:.6;margin-bottom:1vh}
-  .display{font-family:var(--serif-en);font-weight:700;font-size:11vw;line-height:.92;letter-spacing:-.025em}
-  .display-zh{font-family:var(--serif-zh);font-weight:700;font-size:7.8vw;line-height:1.04;letter-spacing:-.005em}
-  .h1-zh{font-family:var(--serif-zh);font-weight:700;font-size:4.6vw;line-height:1.12;letter-spacing:-.005em}
-  .h2-zh{font-family:var(--serif-zh);font-weight:600;font-size:3.2vw;line-height:1.2;letter-spacing:0}
-  .h3-zh{font-family:var(--serif-zh);font-weight:500;font-size:1.9vw;line-height:1.35}
-  .body-zh{font-family:var(--sans-zh);font-weight:400;font-size:max(16px,1.22vw);line-height:1.75;opacity:.82;letter-spacing:.01em}
-  .body-serif{font-family:var(--serif-zh);font-weight:400;font-size:max(16px,1.3vw);line-height:1.65;opacity:.88}
-  .lead{font-family:var(--serif-zh);font-weight:400;font-size:1.9vw;line-height:1.4;opacity:.85}
-  .meta{font-family:var(--mono);font-size:max(16px,.88vw);letter-spacing:.16em;text-transform:uppercase;opacity:.6}
-  .big-num{font-family:var(--serif-en);font-weight:800;font-size:10vw;line-height:.85;letter-spacing:-.03em;font-feature-settings:"tnum"}
-  .mid-num{font-family:var(--serif-en);font-weight:700;font-size:5.5vw;line-height:.88;letter-spacing:-.02em;font-feature-settings:"tnum"}
-  .ghost{font-family:var(--serif-en);font-weight:900;font-size:34vw;line-height:.8;opacity:.06;position:absolute;font-feature-settings:"tnum"}
-  em{font-style:italic;font-family:var(--serif-en)}
-  .en{font-family:var(--serif-en);font-style:italic;font-weight:500}
-  
-  /* ============ 布局工具 ============ */
-  .col{display:flex;flex-direction:column;gap:2.4vh}
-  .row{display:flex;align-items:center;gap:3vw}
-  .grid-6{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:4vw 6vw;flex:1;align-content:center;padding:2vh 0}
-  .grid-9{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:3vh 4vw;flex:1;align-content:center}
-  .grid-4{display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,1fr);gap:4vh 6vw;flex:1;align-content:center}
-  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:4vw;flex:1;align-content:center}
-  .split{display:grid;grid-template-columns:1fr 1fr;gap:4vw;flex:1;align-items:center}
-  .split-55{display:grid;grid-template-columns:55fr 45fr;gap:5vw;flex:1;align-items:stretch}
-  .fill{flex:1}
-  .center{align-items:center;justify-content:center;text-align:center}
-  .bottom-left{position:absolute;left:6vw;bottom:9vh;max-width:50vw}
-  .bottom-right{position:absolute;right:6vw;bottom:9vh;max-width:50vw;text-align:right}
-  .top-right{position:absolute;right:6vw;top:6vh;text-align:right}
-  
-  /* ============ Stat（数字矩阵） ============ */
-  .stat{display:flex;flex-direction:column;gap:1vh;align-items:flex-start}
-  .stat .n{font-family:var(--serif-en);font-weight:800;font-size:8vw;line-height:.88;letter-spacing:-.03em;font-feature-settings:"tnum"}
-  .stat .l{font-family:var(--sans-zh);font-size:max(13px,1.05vw);opacity:.7;margin-top:1vh;font-weight:400;line-height:1.5}
-  .stat .m{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;opacity:.5;margin-bottom:.2vh}
-  
-  /* ============ Callout（引用框） ============ */
-  .callout{padding:3vh 2.4vw;border-left:3px solid currentColor;position:relative;font-family:var(--serif-zh);font-size:max(15px,1.2vw);line-height:1.55;opacity:.92}
-  .slide.light .callout{background:rgba(var(--ink-rgb),.05)}
-  .slide.dark .callout{background:rgba(var(--paper-rgb),.06)}
-  .callout .cite{display:block;margin-top:1.6vh;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.6}
-  .callout .q-big{font-family:var(--serif-zh);font-weight:600;font-size:max(17px,1.6vw);line-height:1.42}
-  
-  /* ============ Platform（平台卡） ============ */
-  .plat{display:flex;flex-direction:column;justify-content:flex-end;padding:2vh 0;border-top:1px solid currentColor;border-color:rgba(127,127,127,.35)}
-  .plat .name{font-family:var(--serif-zh);font-weight:700;font-size:1.8vw;margin-bottom:.6vh}
-  .plat .nb{font-family:var(--serif-en);font-weight:700;font-size:3.2vw;letter-spacing:-.02em;line-height:1;font-feature-settings:"tnum"}
-  .plat .sub{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;opacity:.55;margin-top:.6vh}
-  .plat .fill{font-family:var(--sans-zh);font-weight:300;font-size:2.4vw;opacity:.28;letter-spacing:-.01em;line-height:1}
-  
-  /* ============ Rowline（表格行） ============ */
-  .rowline{display:grid;grid-template-columns:1fr 2fr 1fr;gap:2vw;padding:1.8vh 0;border-top:1px solid currentColor;align-items:center;border-color:rgba(127,127,127,.25)}
-  .rowline:last-child{border-bottom:1px solid currentColor;border-color:rgba(127,127,127,.25)}
-  .rowline .k{font-family:var(--serif-zh);font-weight:700;font-size:1.7vw}
-  .rowline .v{font-family:var(--sans-zh);font-weight:400;font-size:max(14px,1.2vw);opacity:.85;line-height:1.55}
-  .rowline .m{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.6;justify-self:end}
-  
-  /* ============ Pillar（支柱卡片） ============ */
-  .pillar{display:flex;flex-direction:column;gap:0.5vh}
-  .pillar .ic{font-family:var(--serif-en);font-style:italic;font-size:2.6vw;opacity:.45;font-weight:400}
-  .pillar .ic svg{width:2.8vw;height:1.8vw;stroke-width:1.2;opacity:.7}
-  .pillar .t{font-family:var(--serif-zh);font-weight:700;font-size:2.4vw;line-height:1.1}
-  .pillar .d{font-family:var(--sans-zh);font-weight:400;font-size:max(14px,1.1vw);opacity:.76;line-height:1.6}
-  
-  /* ============ Signature / Highlight ============ */
-  .sign{font-family:var(--serif-en);font-style:italic;font-weight:500;font-size:2vw;opacity:.7}
-  .hi{position:relative;display:inline}
-  .slide.dark .hi::after{content:"";position:absolute;left:-.1em;right:-.1em;bottom:-.05em;height:.28em;background:rgba(var(--paper-rgb),.15);z-index:-1}
-  .slide.light .hi::after{content:"";position:absolute;left:-.1em;right:-.1em;bottom:-.05em;height:.28em;background:rgba(var(--ink-rgb),.08);z-index:-1}
-  
-  /* ============ Icons（Lucide via CDN） ============ */
-  .ico{width:1em;height:1em;display:inline-block;vertical-align:-.12em;stroke:currentColor;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-  .ico-lg,.ico-md,.ico-sm{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
-  .ico-lg{width:2.6vw;height:2.6vw;stroke-width:1.2;display:inline-block}
-  .ico-md{width:1.8vw;height:1.8vw;stroke-width:1.3;display:inline-block;vertical-align:-.4em}
-  .ico-sm{width:1.1vw;height:1.1vw;stroke-width:1.4;display:inline-block;vertical-align:-.15em;opacity:.7}
-  
-  /* ============ 图片占位（虚线框，提示设计师位置） ============ */
-  .img-slot{border:1.5px dashed rgba(127,127,127,.4);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1vh;padding:2vh 2vw;font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;opacity:.55;position:relative;aspect-ratio:16/9;width:100%;max-height:56vh;margin-inline:auto;box-sizing:border-box}
-  .img-slot::before{content:"";position:absolute;inset:8px;border:1px solid currentColor;opacity:.2}
-  .img-slot .plus{font-size:2vw;font-weight:300;opacity:.5;letter-spacing:0}
-  .img-slot .label{position:relative;z-index:2;text-align:center}
-  .img-slot.r-4x3{aspect-ratio:4/3}
-  .img-slot.r-3x2{aspect-ratio:3/2}
-  .img-slot.r-1x1{aspect-ratio:1/1}
-  
-  /* ============ 图片实填框（关键：固定高度 + 只裁底部） ============
-     重要约束：高度用内联 height:Nvh 精确控制，不要用 aspect-ratio（会撑破布局）
-     object-position:top center 保证严禁裁剪顶部和左右，只裁剪底部
-  */
-  .frame-img{overflow:hidden;position:relative;background:rgba(0,0,0,.04);box-sizing:border-box;width:100%;border-radius:4px}
-  .slide.dark .frame-img{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12)}
-  .frame-img > img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
-  .frame-img.fit-contain > img{object-fit:contain;object-position:center center}
-  .frame-img.r-16x9{aspect-ratio:16/9;max-height:64vh}
-  .frame-img.r-16x10{aspect-ratio:16/10;max-height:56vh}
-  .frame-img.r-4x3{aspect-ratio:4/3;max-height:56vh}
-  .frame-img.r-3x2{aspect-ratio:3/2;max-height:46vh}
-  .frame-img.r-3x4{aspect-ratio:3/4;max-height:60vh}
-  .frame-img.r-1x1{aspect-ratio:1/1;max-height:50vh}
-  .frame-img.h-16{height:16vh}
-  .frame-img.h-18{height:18vh}
-  .frame-img.h-22{height:22vh}
-  .frame-img.h-26{height:26vh}
-  .frame-img.h-28{height:28vh}
-  .frame-cap{display:flex;justify-content:space-between;align-items:baseline;gap:1vw;margin-top:.8vh;font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;opacity:.72}
-  .frame-cap .pf{font-family:var(--serif-zh);font-weight:600;font-size:max(13px,1vw);letter-spacing:.04em;text-transform:none;opacity:.94}
-  .frame-cap .nb{font-family:var(--serif-en);font-style:italic;font-size:max(15px,1.2vw);letter-spacing:.02em;text-transform:none;opacity:.88}
-  .frame-cap .idx{font-family:var(--mono);opacity:.5}
-  figure.tile{display:flex;flex-direction:column;margin:0;min-width:0}
-  figure.tile > .frame-img{flex:0 0 auto}
-  
-  /* ============ 导航 ============ */
-  #nav{position:fixed;left:50%;bottom:2.6vh;transform:translateX(-50%);z-index:30;display:flex;gap:10px;padding:8px 14px;border-radius:999px;background:rgba(0,0,0,.18);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-  #nav .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:all .3s ease;border:0;padding:0}
-  #nav .dot:hover{background:rgba(255,255,255,.5);transform:scale(1.15)}
-  #nav .dot.active{background:rgba(255,255,255,.95);width:22px;border-radius:999px}
-  body.light-bg #nav{background:rgba(255,255,255,.25)}
-  body.light-bg #nav .dot{background:rgba(var(--ink-rgb),.25)}
-  body.light-bg #nav .dot.active{background:rgba(var(--ink-rgb),.9)}
-  #hint{position:fixed;bottom:3vh;right:3vw;z-index:30;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;opacity:.4;mix-blend-mode:difference;color:#aaa}
-  
-  /* ============================================================
-     ============ LAYOUTS API · 面向 agent 的类（v2）============
-     所有 layouts.md 中的骨架都基于下面这套命名。
-     ============================================================ */
-  
-  /* ---------- .frame：每页主内容容器 ---------- */
-  .frame{flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden}
-  /* 当 .frame 同时加了 grid 类时，grid 的 display:grid 覆盖 flex */
-  .frame.grid-2-7-5,
-  .frame.grid-2-6-6,
-  .frame.grid-2-8-4,
-  .frame.grid-3-3,
-  .frame.grid-6{display:grid}
-  
-  /* ---------- 标题层级（API 名称，衬线为主） ---------- */
-  .h-hero{
-    font-family:var(--serif-zh);
-    font-weight:900;
-    font-size:10vw;
-    line-height:.96;
-    letter-spacing:-.02em;
-  }
-  .h-xl{
-    font-family:var(--serif-zh);
-    font-weight:700;
-    font-size:6.2vw;
-    line-height:1.08;
-    letter-spacing:-.01em;
-  }
-  .h-sub{
-    font-family:var(--serif-zh);
-    font-weight:500;
-    font-size:3.1vw;
-    line-height:1.25;
-    letter-spacing:0;
-    opacity:.7;
-  }
-  .h-md{
-    font-family:var(--serif-zh);
-    font-weight:600;
-    font-size:2.3vw;
-    line-height:1.3;
-  }
-  /* 英文标题专用（Playfair 衬线） */
-  .h-hero-en,.h-xl-en{font-family:var(--serif-en);letter-spacing:-.025em}
-  
-  /* ---------- lead 引语 ---------- */
-  .lead{
-    font-family:var(--serif-zh);
-    font-weight:400;
-    font-size:1.75vw;
-    line-height:1.5;
-    opacity:.86;
-  }
-  
-  /* ---------- meta-row 底部元数据 ---------- */
-  .meta-row{
-    display:flex;
-    gap:1.2em;
-    align-items:baseline;
-    flex-wrap:wrap;
-    font-family:var(--mono);
-    font-size:max(12px,.92vw);
-    letter-spacing:.16em;
-    text-transform:uppercase;
-    opacity:.6;
-  }
-  
-  /* ---------- stat-card（数据大字报用） ---------- */
-  .stat-card{
-    display:flex;
-    flex-direction:column;
-    gap:.6vh;
-    align-items:flex-start;
-    padding-top:3vh;
-    border-top:1px solid currentColor;
-    border-color:rgba(127,127,127,.3);
-  }
-  .stat-card .stat-label{
-    font-family:var(--mono);
-    font-size:max(16px,.78vw);
-    letter-spacing:.24em;
-    text-transform:uppercase;
-    opacity:.55;
-  }
-  .stat-card .stat-nb{
-    font-family:var(--serif-en);
-    font-weight:800;
-    font-size:5.8vw;
-    line-height:.7;
-    letter-spacing:-.03em;
-    font-feature-settings:"tnum";
-    margin-top:.2vh;
-  }
-  .stat-card .stat-nb .stat-unit{
-    font-family:var(--serif-zh);
-    font-weight:500;
-    font-size:.38em;
-    letter-spacing:0;
-    opacity:.72;
-    margin-left:.14em;
-  }
-  .stat-card .stat-note{
-    font-family:var(--sans-zh);
-    font-weight:400;
-    font-size:max(16px,1.2vw);
-    line-height:1.5;
-    opacity:.72;
-    margin-top:.8vh;
-  }
-  /* 当 stat-card 用于 grid-4（2x2），数字适度放大；若页面有标题+引文在上方，可内联 style 覆盖为更小值 */
-  .grid-4 .stat-card .stat-nb{font-size:5vw}
-  /* 当只有 3 个，字也可以稍大 */
-  .grid-3 .stat-card .stat-nb{font-size:6.8vw}
-  
-  /* ---------- pipeline（流水线） ---------- */
-  .pipeline-section{
-    margin-top:2.4vh;
-    padding-top:2.8vh;
-    border-top:1px dashed rgba(127,127,127,.32);
-  }
-  .pipeline-section:first-of-type{
-    border-top:0;
-    padding-top:0;
-    margin-top:1vh;
-  }
-  .pipeline-label{
-    font-family:var(--mono);
-    font-size:max(11px,.85vw);
-    letter-spacing:.24em;
-    text-transform:uppercase;
-    opacity:.62;
-    margin-bottom:2.2vh;
-  }
-  .pipeline{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:0.5vw;
-  }
-  .pipeline[data-cols="3"]{grid-template-columns:repeat(3,1fr)}
-  .pipeline[data-cols="4"]{grid-template-columns:repeat(4,1fr)}
-  .pipeline[data-cols="6"]{grid-template-columns:repeat(6,1fr)}
-  .step{
-    display:flex;
-    flex-direction:column;
-    gap:.8vh;
-    padding-top:1vh;
-    border-top:1px solid currentColor;
-    border-color:rgba(127,127,127,.35);
-  }
-  .step-nb{
-    font-family:var(--serif-en);
-    font-style:italic;
-    font-weight:500;
-    font-size:1.15vw;
-    opacity:.45;
-  }
-  .step-title{
-    font-family:var(--sans-zh);
-    font-weight:700;
-    font-size:1.55vw;
-    letter-spacing:.01em;
-    line-height:1.2;
-  }
-  .step-desc{
-    font-family:var(--sans-zh);
-    font-weight:400;
-    font-size:max(12px,.95vw);
-    line-height:1.45;
-    opacity:.72;
-  }
-  
-  /* ---------- 网格（layouts.md 所用） ---------- */
-  /* 这些类独立挂到任何容器上都能生效，不依赖 .frame 复合选择器 */
-  .grid-2-7-5{display:grid;grid-template-columns:7fr 5fr;gap:3vw;align-items:start}
-  .grid-2-6-6{display:grid;grid-template-columns:1fr 1fr;gap:3vw;align-items:start}
-  .grid-2-8-4{display:grid;grid-template-columns:8fr 4fr;gap:3vw;align-items:start}
-  .grid-3-3{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    grid-auto-rows:minmax(0,1fr);
-    gap:2.4vh 2vw;
-  }
-  /* grid-6 已在旧样式里定义为 3x2，这里仅补 align */
-  
-  /* ---------- 图片 frame-img（layouts.md 主命名） ---------- */
-  /* 在旧样式里已定义，这里补 img-cap 命名别名与增强 */
-  figure.frame-img{margin:0;display:flex;flex-direction:column;min-width:0}
-  .img-cap{
-    display:block;
-    margin-top:.8vh;
-    font-family:var(--mono);
-    font-size:max(10px,.8vw);
-    letter-spacing:.22em;
-    text-transform:uppercase;
-    opacity:.6;
-  }
-  /* callout src 命名别名 */
-  .callout-src{
-    display:block;
-    margin-top:1.6vh;
-    font-family:var(--mono);
-    font-size:11px;
-    letter-spacing:.2em;
-    text-transform:uppercase;
-    opacity:.6;
-  }
-  
-  /* ---------- chrome & foot 补位（layouts.md 简单写法） ---------- */
-  .chrome{font-family:var(--mono);font-size:max(11px,.78vw);letter-spacing:.2em;text-transform:uppercase;opacity:.62}
-  .foot{font-family:var(--mono);font-size:max(11px,.78vw);letter-spacing:.18em;text-transform:uppercase;opacity:.5}
-  
-  /* ============ 动效系统(Motion One 驱动) ============
-     所有 [data-anim] 元素默认隐藏,进入页面时由 JS 逐个揭示。
-     - cascade(默认):按 DOM 顺序 stagger 120ms 淡入 + y:16→0
-     - hero(hero 页自动):慢一点的 stagger 180ms
-     - quote(含 [data-anim="line"]):逐行 600ms 淡入
-     - directional(含 [data-anim="left|right"]):左→分隔线→右
-     - pipeline(data-animate="pipeline"):Space/→ 手动推进
-     Motion One 没加载成功时(CDN 断 + 本地丢),所有 [data-anim] 会兜底显示。
-  */
-  [data-anim]{opacity:1}
-  body.motion-ready [data-anim]{opacity:0}
-  body.motion-ready [data-anim="left"]{transform:translateX(-24px)}
-  body.motion-ready [data-anim="right"]{transform:translateX(24px)}
-  body.motion-ready [data-anim="line"]{opacity:0;transform:translateY(10px)}
-  body.motion-ready [data-animate="pipeline"] [data-anim]{opacity:.15}
-  
-  /* ---------- 响应式降级 ---------- */
-  @media (max-width:900px){
-    .display{font-size:16vw}
-    .display-zh{font-size:12vw}
-    .h1-zh{font-size:7vw}
-    .h-hero{font-size:14vw}
-    .h-xl{font-size:9vw}
-    .pipeline{grid-template-columns:repeat(2,1fr)}
-    .grid-2-7-5,.grid-2-6-6,.grid-2-8-4{grid-template-columns:1fr}
-  }
+.slide.dark{background:#0a1f3d;color:#f1f3f5}
+.slide.light{background:#f1f3f5;color:#0a1f3d}
+.slide.hero.dark{background:linear-gradient(135deg,#0a1f3d 0%,#0d2d52 50%,#112240 100%)}
+.slide.hero.light{background:linear-gradient(135deg,#e8edf2 0%,#f1f3f5 100%)}
 
-  /* ============ 自定义样式：图片占位符 ============ */
-  .img-placeholder{
-    background:linear-gradient(135deg, rgba(var(--ink-rgb),.06) 0%, rgba(var(--ink-rgb),.02) 100%);
-    border:1px dashed rgba(var(--ink-rgb),.2);
-    border-radius:4px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:2vh 2vw;
-    text-align:center;
-    font-family:var(--mono);
-    font-size:11px;
-    letter-spacing:.2em;
-    text-transform:uppercase;
-    opacity:.5;
-    min-height:20vh;
-  }
-  .slide.dark .img-placeholder{
-    background:linear-gradient(135deg, rgba(var(--paper-rgb),.06) 0%, rgba(var(--paper-rgb),.02) 100%);
-    border-color:rgba(var(--paper-rgb),.2);
-  }
+/* === Chrome & Foot === */
+.chrome{display:flex;justify-content:space-between;font-family:var(--mono);font-size:clamp(11px,.75vw,14px);letter-spacing:.18em;text-transform:uppercase;opacity:.62;margin-bottom:0}
+.foot{margin-top:auto;display:flex;justify-content:space-between;font-family:var(--mono);font-size:clamp(11px,.75vw,14px);letter-spacing:.14em;text-transform:uppercase;opacity:.5}
 
-  /* ============ 时间轴样式 ============ */
-  .timeline{
-    position:relative;
-    padding-left:3vw;
-    margin-top:3vh;
-  }
-  .timeline::before{
-    content:"";
-    position:absolute;
-    left:0;
-    top:0;
-    bottom:0;
-    width:2px;
-    background:currentColor;
-    opacity:.25;
-  }
-  .timeline-item{
-    position:relative;
-    padding-bottom:3vh;
-    padding-left:2vw;
-  }
-  .timeline-item::before{
-    content:"";
-    position:absolute;
-    left:-3.6vw;
-    top:.6vh;
-    width:10px;
-    height:10px;
-    border-radius:50%;
-    background:currentColor;
-    opacity:.5;
-  }
-  .timeline-item.highlight::before{
-    opacity:1;
-    background:var(--paper);
-  }
-  .slide.light .timeline-item.highlight::before{
-    background:var(--ink);
-  }
-  .timeline-date{
-    font-family:var(--mono);
-    font-size:max(11px,.85vw);
-    letter-spacing:.16em;
-    text-transform:uppercase;
-    opacity:.6;
-    margin-bottom:.8vh;
-  }
-  .timeline-content{
-    font-family:var(--sans-zh);
-    font-size:max(13px,1.1vw);
-    line-height:1.6;
-    opacity:.88;
-  }
+/* === 文字规模 === */
+.kicker{font-family:var(--mono);font-size:clamp(11px,.8vw,14px);letter-spacing:.3em;text-transform:uppercase;opacity:.6;margin-bottom:.8vh}
+.h-hero{font-family:var(--serif-zh);font-weight:700;font-size:clamp(48px,8vw,120px);line-height:1.0;letter-spacing:-.01em}
+.h-xl{font-family:var(--serif-zh);font-weight:700;font-size:clamp(28px,5vw,72px);line-height:1.1;letter-spacing:-.01em}
+.h-sub{font-family:var(--serif-zh);font-weight:400;font-size:clamp(16px,2.4vw,36px);line-height:1.3;opacity:.75}
+.h-md{font-family:var(--serif-zh);font-weight:600;font-size:clamp(18px,2vw,32px);line-height:1.3}
+.lead{font-family:var(--serif-zh);font-weight:400;font-size:clamp(14px,1.6vw,24px);line-height:1.55;opacity:.85}
+.meta{font-family:var(--mono);font-size:clamp(10px,.78vw,13px);letter-spacing:.18em;text-transform:uppercase;opacity:.6}
+.meta-row{display:flex;gap:1.2em;align-items:baseline;flex-wrap:wrap;font-family:var(--mono);font-size:clamp(11px,.85vw,13px);letter-spacing:.14em;opacity:.6}
+.body-zh{font-family:var(--sans-zh);font-weight:400;font-size:clamp(13px,1.1vw,18px);line-height:1.7;opacity:.84;letter-spacing:.01em}
 
-  /* ============ 三列卡片样式 ============ */
-  .card-3{
-    padding:2vh 2vw;
-    border-top:1px solid currentColor;
-    border-color:rgba(127,127,127,.3);
-  }
-  .card-3 .card-title{
-    font-family:var(--serif-zh);
-    font-weight:700;
-    font-size:1.6vw;
-    margin-bottom:1vh;
-  }
-  .card-3 .card-desc{
-    font-family:var(--sans-zh);
-    font-size:max(12px,1vw);
-    line-height:1.65;
-    opacity:.78;
-  }
+/* === 布局 === */
+.frame{flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.split-65{display:grid;grid-template-columns:65fr 35fr;gap:4vw;flex:1;align-items:start}
+.split-55{display:grid;grid-template-columns:55fr 45fr;gap:4vw;flex:1;align-items:start}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:3vw}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:3vw}
+.grid-3-3{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:minmax(0,1fr);gap:2.4vh 2vw;flex:1;align-content:center}
+.grid-6{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:3vh 4vw;flex:1;align-content:center}
+.col{display:flex;flex-direction:column;gap:2vh}
 
-  /* ============ 五步法流程图 ============ */
-  .five-steps{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:1.5vw;
-    margin-top:3vh;
-    position:relative;
-  }
-  .five-steps::before{
-    content:"";
-    position:absolute;
-    top:3.5vh;
-    left:5%;
-    right:5%;
-    height:1px;
-    background:currentColor;
-    opacity:.25;
-  }
-  .step-item{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:.8vh;
-    flex:1;
-    position:relative;
-    z-index:1;
-  }
-  .step-num{
-    font-family:var(--serif-en);
-    font-weight:700;
-    font-size:1.3vw;
-    width:4vw;
-    height:4vw;
-    border-radius:50%;
-    border:2px solid currentColor;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    opacity:.7;
-    background:var(--paper);
-  }
-  .slide.dark .step-num{
-    background:var(--ink);
-  }
-  .step-text{
-    font-family:var(--sans-zh);
-    font-size:max(11px,.9vw);
-    text-align:center;
-    line-height:1.5;
-    opacity:.85;
-  }
+/* === Stat Card === */
+.stat-card{display:flex;flex-direction:column;gap:.5vh;align-items:flex-start;padding-top:2.5vh;border-top:1px solid rgba(127,127,127,.3)}
+.stat-card .stat-label{font-family:var(--mono);font-size:clamp(10px,.75vw,12px);letter-spacing:.22em;text-transform:uppercase;opacity:.55}
+.stat-card .stat-nb{font-family:var(--serif-en);font-weight:800;font-size:clamp(32px,5vw,72px);line-height:.78;letter-spacing:-.03em;font-feature-settings:"tnum"}
+.stat-card .stat-nb .stat-unit{font-family:var(--serif-zh);font-weight:500;font-size:.38em;letter-spacing:0;opacity:.72;margin-left:.1em}
+.stat-card .stat-note{font-family:var(--sans-zh);font-weight:400;font-size:clamp(12px,.95vw,16px);line-height:1.5;opacity:.72;margin-top:.5vh}
+
+/* === Rowline === */
+.rowline{display:grid;grid-template-columns:1fr 2fr;gap:1.5vw;padding:1.6vh 0;border-top:1px solid rgba(127,127,127,.25);align-items:start}
+.rowline:last-child{border-bottom:1px solid rgba(127,127,127,.25)}
+.rowline .k{font-family:var(--serif-zh);font-weight:700;font-size:clamp(14px,1.6vw,24px)}
+.rowline .v{font-family:var(--sans-zh);font-weight:400;font-size:clamp(12px,1.1vw,17px);opacity:.85;line-height:1.55}
+
+/* === Pillar === */
+.pillar{display:flex;flex-direction:column;gap:.5vh;border-top:1px solid rgba(127,127,127,.3);padding-top:1.5vh}
+.pillar .ic{font-family:var(--mono);font-size:clamp(11px,.82vw,14px);letter-spacing:.2em;opacity:.55}
+.pillar .t{font-family:var(--serif-zh);font-weight:700;font-size:clamp(16px,2vw,30px);line-height:1.15;margin-top:.3vh}
+.pillar .d{font-family:var(--sans-zh);font-weight:400;font-size:clamp(12px,.95vw,16px);opacity:.76;line-height:1.6;margin-top:.4vh}
+
+/* === Card-3 === */
+.card-3{padding:2vh 1.5vw;border-top:1px solid rgba(127,127,127,.3)}
+.card-3 .card-title{font-family:var(--serif-zh);font-weight:700;font-size:clamp(16px,1.8vw,28px);margin-bottom:1vh}
+.card-3 .card-desc{font-family:var(--sans-zh);font-size:clamp(13px,1vw,17px);line-height:1.65;opacity:.8}
+
+/* === List item === */
+.li-row{display:flex;gap:.8vw;align-items:flex-start;font-size:clamp(13px,1.1vw,17px);line-height:1.6;opacity:.88}
+.li-row .arrow{font-weight:700;opacity:.5;flex-shrink:0;margin-top:.1em}
+
+/* === Callout strip === */
+.strip{padding:2vh 2vw;border-left:3px solid rgba(127,127,127,.4);background:rgba(127,127,127,.06);border-radius:0 4px 4px 0}
+.slide.dark .strip{background:rgba(255,255,255,.05)}
+
+/* === TOC item === */
+.toc-item{display:flex;gap:3vw;align-items:baseline;margin-bottom:3.5vh}
+.toc-item .num{font-family:var(--serif-en);font-size:clamp(24px,3.5vw,52px);font-weight:800;opacity:.28}
+.toc-item .label{font-family:var(--serif-zh);font-size:clamp(15px,1.8vw,26px);font-weight:700}
+.toc-item .sub{font-size:clamp(12px,.95vw,15px);opacity:.6;margin-top:.4vh}
+
+/* === 导航 === */
+#nav{position:fixed;left:50%;bottom:2.2vh;transform:translateX(-50%);z-index:30;display:flex;gap:8px;padding:7px 12px;border-radius:999px;background:rgba(0,0,0,.22)}
+#nav .dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.28);cursor:pointer;border:0;padding:0;transition:background .2s,width .2s}
+#nav .dot:hover{background:rgba(255,255,255,.5)}
+#nav .dot.active{background:rgba(255,255,255,.95);width:20px;border-radius:999px}
+body.light-page #nav .dot{background:rgba(10,31,61,.22)}
+body.light-page #nav .dot.active{background:rgba(10,31,61,.88)}
+#hint{position:fixed;bottom:2.8vh;right:3vw;z-index:30;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;opacity:.35;color:#aaa}
+
+/* === 分隔线 === */
+.rule{width:100%;height:1px;background:currentColor;opacity:.22;margin:2vh 0}
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;padding:5px 12px;border:1px solid currentColor;opacity:.8}
 </style>
 </head>
 <body>
 
-<canvas id="bg-dark" class="bg"></canvas>
-<canvas id="bg-light" class="bg"></canvas>
-<div id="hint">← → 翻页 · ESC 索引</div>
+<div id="hint">← → 翻页</div>
 
-<div id="deck">
+<!-- ========== SLIDES ========== -->
 
-<!-- ============================================================
-     SLIDES 插入区 · 在此处填充所有 <section class="slide ..."> 页面
-     ============================================================ -->
-
-<!-- ============ 第1页：封面页 ============ -->
-<section class="slide hero dark" data-animate="hero">
-  <div class="chrome">
-    <div>智慧翔安 · 数据要素产业园</div>
-    <div>2026.06</div>
+<!-- 第1页：封面 -->
+<div class="slide hero dark" id="s0">
+  <div class="chrome"><span>智慧翔安 · 数据要素产业园</span><span>2026.06</span></div>
+  <div class="frame" style="justify-content:center;gap:3.5vh">
+    <div class="kicker">智慧翔安数据有限公司</div>
+    <h1 class="h-hero">数据要素产业园</h1>
+    <h2 class="h-sub" style="margin-top:1vh">以运营驱动产业集聚 · 以服务赋能数字升级</h2>
+    <p class="lead" style="max-width:58vw;margin-top:5vh">数据要素运营商 · 产业生态组织者 · 企业数字化服务商</p>
+    <div class="meta-row" style="margin-top:1vh"><span>汇报单位：智慧翔安数据有限公司</span><span>·</span><span>汇报日期：2026年6月</span></div>
   </div>
-  <div class="frame" style="display:grid; gap:4vh; align-content:center; min-height:80vh">
-    <div class="kicker" data-anim>智慧翔安数据有限公司</div>
-    <h1 class="h-hero" data-anim>数据要素产业园</h1>
-    <h2 class="h-sub" data-anim>以运营驱动产业集聚 · 以服务赋能数字升级</h2>
-    <p class="lead" style="max-width:60vw; margin-top:8vh" data-anim>
-      数据要素运营商 · 产业生态组织者 · 企业数字化服务商
-    </p>
-    <div class="meta-row" style="margin-top:1vh" data-anim>
-      <span>汇报单位：智慧翔安数据有限公司</span><span>·</span><span>汇报日期：2026年6月</span>
-    </div>
-  </div>
-  <div class="foot">
-    <div>数据要素市场化配置改革 · 翔安实践</div>
-    <div>— 2026 —</div>
-  </div>
-</section>
+  <div class="foot"><span>数据要素市场化配置改革 · 翔安实践</span><span>— 2026 —</span></div>
+</div>
 
-
-<!-- ============ 第2页：目录 ============ -->
-<section class="slide light">
-  <div class="chrome">
-    <div>目录 · Contents</div>
-    <div>02 / 17</div>
-  </div>
-  <div class="frame" style="padding-top:6vh">
-    <div class="kicker" data-anim>Overview · 概览</div>
-    <h2 class="h-xl" data-anim>汇报目录</h2>
-    <div class="grid-2-6-6" style="margin-top:5vh; gap:5vw">
-      <div style="display:flex; flex-direction:column; gap:5vh" data-anim>
-        <div style="display:flex; gap:5vw; align-items:baseline">
-          <span style="font-family:var(--serif-en); font-size:4vw; font-weight:800; opacity:.3">01</span>
-          <div>
-            <div style="font-family:var(--serif-zh); font-size:2vw; font-weight:700">项目背景与战略意义</div>
-            <div style="font-size:max(13px,1vw); opacity:.6; margin-top:.8vh">国家战略 · 翔安机遇 · 园区定位</div>
-          </div>
-        </div>
-        <div style="display:flex; gap:5vw; align-items:baseline">
-          <span style="font-family:var(--serif-en); font-size:4vw; font-weight:800; opacity:.3">02</span>
-          <div>
-            <div style="font-family:var(--serif-zh); font-size:2vw; font-weight:700">当前建设成果</div>
-            <div style="font-size:max(13px,1vw); opacity:.6; margin-top:.8vh">园区建设 · 平台成果 · 生态资源</div>
-          </div>
-        </div>
-        <div style="display:flex; gap:5vw; align-items:baseline">
-          <span style="font-family:var(--serif-en); font-size:4vw; font-weight:800; opacity:.3">03</span>
-          <div>
-            <div style="font-family:var(--serif-zh); font-size:2vw; font-weight:700">核心运营模式</div>
-            <div style="font-size:max(13px,1vw); opacity:.6; margin-top:.8vh">服务企业 · 创造价值 · 形成闭环</div>
-          </div>
-        </div>
+<!-- 第2页：目录 -->
+<div class="slide light" id="s1">
+  <div class="chrome"><span>目录 · Contents</span><span>02 / 17</span></div>
+  <div class="frame" style="padding-top:4vh">
+    <div class="kicker">Overview · 概览</div>
+    <h2 class="h-xl">汇报目录</h2>
+    <div class="grid-2" style="margin-top:4vh;gap:4vw">
+      <div>
+        <div class="toc-item"><span class="num">01</span><div><div class="label">项目背景与战略意义</div><div class="sub">国家战略 · 翔安机遇 · 园区定位</div></div></div>
+        <div class="toc-item"><span class="num">02</span><div><div class="label">当前建设成果</div><div class="sub">园区建设 · 平台成果 · 生态资源</div></div></div>
+        <div class="toc-item"><span class="num">03</span><div><div class="label">核心运营模式</div><div class="sub">服务企业 · 创造价值 · 形成闭环</div></div></div>
       </div>
-      <div style="display:flex; flex-direction:column; gap:3vh" data-anim>
-        <div style="display:flex; gap:5vw; align-items:baseline">
-          <span style="font-family:var(--serif-en); font-size:4vw; font-weight:800; opacity:.3">04</span>
-          <div>
-            <div style="font-family:var(--serif-zh); font-size:2vw; font-weight:700">标杆案例打造</div>
-            <div style="font-size:max(13px,1vw); opacity:.6; margin-top:.8vh">友达案例 · 翔炬投案例 · 复制路径</div>
-          </div>
-        </div>
-        <div style="display:flex; gap:5vw; align-items:baseline">
-          <span style="font-family:var(--serif-en); font-size:4vw; font-weight:800; opacity:.3">05</span>
-          <div>
-            <div style="font-family:var(--serif-zh); font-size:2vw; font-weight:700">后续运营规划</div>
-            <div style="font-size:max(13px,1vw); opacity:.6; margin-top:.8vh">近期重点 · 中长期目标 · 资源需求</div>
-          </div>
-        </div>
+      <div>
+        <div class="toc-item"><span class="num">04</span><div><div class="label">标杆案例打造</div><div class="sub">友达案例 · 翔炬投案例 · 复制路径</div></div></div>
+        <div class="toc-item"><span class="num">05</span><div><div class="label">后续运营规划</div><div class="sub">近期重点 · 中长期目标 · 资源需求</div></div></div>
       </div>
     </div>
   </div>
-  <div class="foot">
-    <div>五大板块 · 系统汇报</div>
-    <div>— · —</div>
-  </div>
-</section>
+  <div class="foot"><span>五大板块 · 系统汇报</span><span>— · —</span></div>
+</div>
 
-<!-- ============ 第3页：国家战略 ============ -->
-<section class="slide light">
-  <div class="chrome">
-    <div>第一幕 · 项目背景</div>
-    <div>03 / 17</div>
-  </div>
-  <div class="frame" style="padding-top:6vh">
-    <div class="kicker" data-anim>Act I · 项目背景与战略意义</div>
-    <h2 class="h-xl" data-anim>国家战略引领 · 翔安独有机遇</h2>
-    
-    <div class="grid-2-6-6" style="margin-top:5vh; gap:5vw">
-      <!-- 左侧：政策背景 + 项目情况 -->
-      <div data-anim>
-        <div style="margin-bottom:5vh">
-          <div class="meta" style="margin-bottom:1.5vh">国家战略背景</div>
-          <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:1.8vh; font-size:max(14px,1.15vw); line-height:1.6; opacity:.88">
-            <li style="display:flex; gap:.8vw; align-items:flex-start">
-              <span style="font-family:var(--serif-en); font-weight:700; opacity:.5; font-size:1.1em">▸</span>
-              <span>党的二十大报告提出加快建设数字中国，数据要素成核心生产要素</span>
-            </li>
-            <li style="display:flex; gap:.8vw; align-items:flex-start">
-              <span style="font-family:var(--serif-en); font-weight:700; opacity:.5; font-size:1.1em">▸</span>
-              <span>《数据要素×三年行动计划（2024-2026）》推动数据要素市场化改革</span>
-            </li>
-            <li style="display:flex; gap:.8vw; align-items:flex-start">
-              <span style="font-family:var(--serif-en); font-weight:700; opacity:.5; font-size:1.1em">▸</span>
-              <span>厦门市将数字经济作为核心战略，翔安为重要载体</span>
-            </li>
-            <li style="display:flex; gap:.8vw; align-items:flex-start">
-              <span style="font-family:var(--serif-en); font-weight:700; opacity:.5; font-size:1.1em">▸</span>
-              <span>厦门市入选全国首批13个城市可信数据空间试点之一</span>
-            </li>
-          </ul>
+<!-- 第3页：国家战略 -->
+<div class="slide light" id="s2">
+  <div class="chrome"><span>第一幕 · 项目背景</span><span>03 / 17</span></div>
+  <div class="frame" style="padding-top:3vh">
+    <div class="kicker">Act I · 项目背景与战略意义</div>
+    <h2 class="h-xl">国家战略引领 · 翔安独有机遇</h2>
+    <div class="split-55" style="margin-top:4vh">
+      <div class="col">
+        <div class="meta" style="margin-bottom:.5vh">国家战略背景</div>
+        <div style="display:flex;flex-direction:column;gap:1.5vh">
+          <div class="li-row"><span class="arrow">▸</span><span>党的二十大报告提出加快建设数字中国，数据要素成核心生产要素</span></div>
+          <div class="li-row"><span class="arrow">▸</span><span>《数据要素×三年行动计划（2024-2026）》推动数据要素市场化改革</span></div>
+          <div class="li-row"><span class="arrow">▸</span><span>厦门市将数字经济作为核心战略，翔安为重要载体</span></div>
+          <div class="li-row"><span class="arrow">▸</span><span>厦门市入选全国首批13个城市可信数据空间试点之一</span></div>
         </div>
-        
-        <div class="data-card" style="margin-top:5vh">
-          <div class="meta" style="margin-bottom:1.5vh">翔安核心机遇</div>
-          <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:1.8vh; font-size:max(14px,1.15vw); line-height:1.6; opacity:.88">
-            <li style="display:flex; gap:.8vw; align-items:flex-start">
-              <span style="font-family:var(--serif-en); font-weight:700; opacity:.5; font-size:1.1em">▸</span>
-              <span>翔安作为厦门东部中心，数字产业承载空间充足、政策倾斜明显</span>
-            </li>
-            <li style="display:flex; gap:.8vw; align-items:flex-start">
-              <span style="font-family:var(--serif-en); font-weight:700; opacity:.5; font-size:1.1em">▸</span>
-              <span>智慧翔安作为国企平台，具备数据资源、政策衔接、产业统筹核心优势</span>
-            </li>
-          </ul>
+        <div class="meta" style="margin-top:3vh;margin-bottom:.5vh">翔安核心机遇</div>
+        <div style="display:flex;flex-direction:column;gap:1.5vh">
+          <div class="li-row"><span class="arrow">▸</span><span>翔安作为厦门东部中心，数字产业承载空间充足、政策倾斜明显</span></div>
+          <div class="li-row"><span class="arrow">▸</span><span>智慧翔安作为国企平台，具备数据资源、政策衔接、产业统筹核心优势</span></div>
         </div>
       </div>
-      
-      <!-- 右侧：预期影响数据 -->
-      <div data-anim>
-        <div class="meta" style="margin-bottom:1vh">预期影响</div>
-        <div style="display:flex; flex-direction:column; gap:1vh">
+      <div>
+        <div class="meta" style="margin-bottom:.8vh">预期影响</div>
+        <div style="display:flex;flex-direction:column;gap:1.5vh">
           <div class="stat-card">
-            <div class="stat-nb">2500 <span class="stat-unit">万元</span></div>
+            <div class="stat-nb">2500<span class="stat-unit">万元</span></div>
             <div class="stat-note">预计有效带动区内固定资产投资超2500万元</div>
           </div>
           <div class="stat-card">
-            <div class="stat-nb">5% <span class="stat-unit">增长</span></div>
+            <div class="stat-nb">5%<span class="stat-unit">增长</span></div>
             <div class="stat-note">数据相关企业年度营收规模增长不低于5%</div>
           </div>
           <div class="stat-card">
-            <div class="stat-nb" style="font-size:3.8vw">国家级</div>
+            <div class="stat-nb" style="font-size:clamp(24px,3.2vw,48px)">国家级</div>
             <div class="stat-note">打造国家级数据要素产业示范基地</div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="foot">
-    <div>Page 02 · 政策合规性强</div>
-    <div>— · —</div>
-  </div>
-</section>
+  <div class="foot"><span>政策合规性强</span><span>— · —</span></div>
+</div>
 
-
-
-<!-- ============ 第4页：园区优势 ============ -->
-<section class="slide light">
-  <div class="chrome">
-    <div>第一幕 · 基本情况</div>
-    <div>04 / 17</div>
-  </div>
-  <div class="frame grid-2-7-5" style="padding-top:5vh">
-    <div style="display:flex; flex-direction:column; gap:2.5vh">
-      <div class="kicker" data-anim>Act II · 园区基本情况</div>
-      <h2 class="h-xl" data-anim>产业园<br>基本情况</h2>
-      <p class="lead" style="margin-top:1vh" data-anim>
-        运营主体 · 核心定位 · 发展空间 · 建设周期
-      </p>
+<!-- 第4页：园区基本情况 -->
+<div class="slide light" id="s3">
+  <div class="chrome"><span>第一幕 · 基本情况</span><span>04 / 17</span></div>
+  <div class="frame split-55" style="padding-top:4vh">
+    <div class="col">
+      <div class="kicker">Act II · 园区基本情况</div>
+      <h2 class="h-xl">产业园<br>基本情况</h2>
+      <p class="lead" style="margin-top:1.5vh">运营主体 · 核心定位 · 发展空间 · 建设周期</p>
     </div>
-    <div style="display:flex; flex-direction:column; gap:1.5vh; margin-top:7vh">
-      <div class="rowline" data-anim>
+    <div style="display:flex;flex-direction:column;gap:1vh;margin-top:6vh">
+      <div class="rowline">
         <div class="k">核心定位</div>
         <div class="v">数据要素市场化配置改革示范区、数据产业集聚区、数据应用场景创新区</div>
       </div>
-      <div class="rowline" data-anim>
+      <div class="rowline">
         <div class="k">发展空间</div>
         <div class="v">已建成一期、二期，共31.11万平方米（可承载100+数字企业）；拟建三期总建筑面积约25.51万平方米</div>
       </div>
-      <div class="rowline" data-anim>
+      <div class="rowline">
         <div class="k">建设周期</div>
         <div class="v">2026-2028年三期推进：<br>2026（基础运营）、2027（生态成长）、2028（标杆输出）</div>
       </div>
     </div>
   </div>
-  <div class="foot">
-    <div>Page 05 · 基本情况：运营基础</div>
-    <div>Act II · 园区基本情况</div>
-  </div>
-</section>
+  <div class="foot"><span>基本情况：运营基础</span><span>Act II · 园区基本情况</span></div>
+</div>
 
-
-
-<!-- ============ 第5页：数据要素全生命周期运营平台 ============ -->
-<section class="slide dark">
-  <div class="chrome">
-    <div>第二幕 · 当前建设成果</div>
-    <div>05 / 17</div>
-  </div>
-  <div class="frame" style="padding-top:5vh">
-    <div class="kicker" data-anim>Act I · 数据要素运营平台</div>
-    <h2 class="h-xl" style="margin-bottom:2vh" data-anim>数据要素全生命周期运营平台<br>六大核心模块已建成</h2>
-    <p class="lead" style="margin-bottom:2vh" data-anim>基础框架已搭建完成，功能展示与企业对接链路初步打通</p>
-    
-    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:2vh 4vw; flex:1; align-content:start" data-anim>
-      <div style="padding:1.5vh 1.5vw; border-left:3px solid rgba(255,255,255,.3); display:flex; align-items:center; gap:1vw">
-        <i data-lucide="check-circle" class="ico-md" style="color:rgba(255,255,255,.7)"></i>
-        <div>
-          <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(13px,1.1vw)">政策咨询模块</div>
-          <div style="font-family:var(--sans-zh); font-size:max(11px,.9vw); opacity:.7; margin-top:.3vh">可申报数据项目与政策收集，引导成为数据企业</div>
-        </div>
-      </div>
-      <div style="padding:1.5vh 1.5vw; border-left:3px solid rgba(255,255,255,.3); display:flex; align-items:center; gap:1vw">
-        <i data-lucide="check-circle" class="ico-md" style="color:rgba(255,255,255,.7)"></i>
-        <div>
-          <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(13px,1.1vw)">数据产品资源模块</div>
-          <div style="font-family:var(--sans-zh); font-size:max(11px,.9vw); opacity:.7; margin-top:.3vh">六大类资源类型，已录入100+不同行业场景类型产品</div>
-        </div>
-      </div>
-      <div style="padding:1.5vh 1.5vw; border-left:3px solid rgba(255,255,255,.3); display:flex; align-items:center; gap:1vw">
-        <i data-lucide="check-circle" class="ico-md" style="color:rgba(255,255,255,.7)"></i>
-        <div>
-          <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(13px,1.1vw)">数据治理开发模块</div>
-          <div style="font-family:var(--sans-zh); font-size:max(11px,.9vw); opacity:.7; margin-top:.3vh">配套众数高质量数据集工程平台，实施数据加工与产品开发</div>
-        </div>
-      </div>
-      <div style="padding:1.5vh 1.5vw; border-left:3px solid rgba(255,255,255,.3); display:flex; align-items:center; gap:1vw">
-        <i data-lucide="check-circle" class="ico-md" style="color:rgba(255,255,255,.7)"></i>
-        <div>
-          <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(13px,1.1vw)">数据确权认证模块</div>
-          <div style="font-family:var(--sans-zh); font-size:max(11px,.9vw); opacity:.7; margin-top:.3vh">对接厦门市数据产权登记平台与数据检测认证服务</div>
-        </div>
-      </div>
-      <div style="padding:1.5vh 1.5vw; border-left:3px solid rgba(255,255,255,.3); display:flex; align-items:center; gap:1vw">
-        <i data-lucide="check-circle" class="ico-md" style="color:rgba(255,255,255,.7)"></i>
-        <div>
-          <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(13px,1.1vw)">产业生态模块</div>
-          <div style="font-family:var(--sans-zh); font-size:max(11px,.9vw); opacity:.7; margin-top:.3vh">挖掘企业场景需求，打通企业资源流动渠道，树立标杆服务案例</div>
-        </div>
-      </div>
-      <div style="padding:1.5vh 1.5vw; border-left:3px solid rgba(255,255,255,.3); display:flex; align-items:center; gap:1vw">
-        <i data-lucide="check-circle" class="ico-md" style="color:rgba(255,255,255,.7)"></i>
-        <div>
-          <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(13px,1.1vw)">可信数据空间</div>
-          <div style="font-family:var(--sans-zh); font-size:max(11px,.9vw); opacity:.7; margin-top:.3vh">厦门可信数据空间翔安专区</div>
-        </div>
-      </div>
+<!-- 第5页：六大模块 -->
+<div class="slide dark" id="s4">
+  <div class="chrome"><span>第二幕 · 当前建设成果</span><span>05 / 17</span></div>
+  <div class="frame" style="padding-top:3vh">
+    <div class="kicker">Act I · 数据要素运营平台</div>
+    <h2 class="h-xl" style="margin-bottom:1vh">数据要素全生命周期运营平台<br>六大核心模块已建成</h2>
+    <p class="lead" style="margin-bottom:2.5vh;opacity:.78">基础框架已搭建完成，功能展示与企业对接链路初步打通</p>
+    <div class="grid-2" style="gap:1.5vh 4vw;flex:1;align-content:start">
+      <div class="strip"><div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(14px,1.1vw,18px);margin-bottom:.4vh">✓ 政策咨询模块</div><div style="font-size:clamp(12px,.92vw,15px);opacity:.72;line-height:1.55">可申报数据项目与政策收集，引导数据企业资源技术入库</div></div>
+      <div class="strip"><div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(14px,1.1vw,18px);margin-bottom:.4vh">✓ 数据产品资源模块</div><div style="font-size:clamp(12px,.92vw,15px);opacity:.72;line-height:1.55">六大类资源类型，已录入100+不同行业场景类型产品</div></div>
+      <div class="strip"><div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(14px,1.1vw,18px);margin-bottom:.4vh">✓ 数据治理开发模块</div><div style="font-size:clamp(12px,.92vw,15px);opacity:.72;line-height:1.55">配套众数高质量数据集工程平台，实施数据加工与产品开发</div></div>
+      <div class="strip"><div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(14px,1.1vw,18px);margin-bottom:.4vh">✓ 数据确权认证模块</div><div style="font-size:clamp(12px,.92vw,15px);opacity:.72;line-height:1.55">对接厦门市数据产权登记平台，提供数据资产确权认证服务</div></div>
+      <div class="strip"><div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(14px,1.1vw,18px);margin-bottom:.4vh">✓ 产业生态模块</div><div style="font-size:clamp(12px,.92vw,15px);opacity:.72;line-height:1.55">挖掘企业场景需求，打通企业资源流动渠道，树立标杆服务案例</div></div>
+      <div class="strip"><div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(14px,1.1vw,18px);margin-bottom:.4vh">✓ 可信数据空间</div><div style="font-size:clamp(12px,.92vw,15px);opacity:.72;line-height:1.55">建设厦门可信数据空间翔安专区</div></div>
     </div>
   </div>
-  <div class="foot">
-    <div>Page 05 · 当前建设成果</div>
-    <div>Act I ·  数据要素运营平台</div>
-  </div>
-</section>
+  <div class="foot"><span>当前建设成果</span><span>Act I · 数据要素运营平台</span></div>
+</div>
 
-
-<!-- ============ 第6页：平台已汇聚100+数据产品 ============ -->
-<section class="slide light">
-  <div class="chrome">
-    <div>第二幕 · 当前建设成果</div>
-    <div>06 / 17</div>
-  </div>
-  <div class="frame" style="padding-top:5vh">
-    <div class="kicker" data-anim>Act II · 资源汇聚</div>
-    <h2 class="h-xl" style="margin-bottom:1vh" data-anim>平台已汇聚100+数据产品</h2>
-    <p class="lead" style="margin-bottom:1vh" data-anim>资源池建设初具规模，形成4大类20项服务目录</p>
-    
-    <div class="grid-6" style="margin-top:1vh" data-anim>
+<!-- 第6页：100+数据产品 -->
+<div class="slide light" id="s5">
+  <div class="chrome"><span>第二幕 · 当前建设成果</span><span>06 / 17</span></div>
+  <div class="frame" style="padding-top:3vh">
+    <div class="kicker">Act II · 资源汇聚</div>
+    <h2 class="h-xl" style="margin-bottom:.8vh">平台已汇聚100+数据产品</h2>
+    <p class="lead" style="margin-bottom:1.5vh">资源池建设初具规模，形成4大类20项服务目录</p>
+    <div class="grid-6">
       <div class="stat-card">
         <div class="stat-label">Data sets</div>
-        <div class="stat-nb">59 <span class="stat-unit">个</span></div>
+        <div class="stat-nb">59<span class="stat-unit">个</span></div>
         <div class="stat-note">数据集已录入平台</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Service Categories</div>
-        <div class="stat-nb">53 <span class="stat-unit">项</span></div>
+        <div class="stat-nb">53<span class="stat-unit">项</span></div>
         <div class="stat-note">数据服务产品</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">AI model</div>
-        <div class="stat-nb">27 <span class="stat-unit">个</span></div>
+        <div class="stat-nb">27<span class="stat-unit">个</span></div>
         <div class="stat-note">行业大模型</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Ecosystem Partners</div>
-        <div class="stat-nb">10+ <span class="stat-unit">家</span></div>
+        <div class="stat-nb">10+<span class="stat-unit">家</span></div>
         <div class="stat-note">已对接生态伙伴</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Datasets</div>
-        <div class="stat-nb">6 <span class="stat-unit">大类</span></div>
+        <div class="stat-label">Resource Types</div>
+        <div class="stat-nb">6<span class="stat-unit">大类</span></div>
         <div class="stat-note">资源类型覆盖</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Industry coverage</div>
-        <div class="stat-nb">10+ <span class="stat-unit">类</span></div>
-        <div class="stat-note">行业场景等</div>
+        <div class="stat-nb">10+<span class="stat-unit">类</span></div>
+        <div class="stat-note">行业场景覆盖</div>
       </div>
     </div>
   </div>
-  <div class="foot">
-    <div>Page 06 · 100+数据产品已上架</div>
-    <div>Act II · 资源汇聚</div>
-  </div>
-</section>
+  <div class="foot"><span>100+数据产品已上架</span><span>Act II · 资源汇聚</span></div>
+</div>
 
-<!-- ============ 第7页：平台二期规划 ============ -->
-<section class="slide dark">
-  <div class="chrome">
-    <div>第二幕 · 当前建设成果</div>
-    <div>07 / 17</div>
-  </div>
-  <div class="frame grid-2-7-5" style="padding-top:5vh">
-    <div style="display:flex; flex-direction:column; gap:2.5vh">
-      <div class="kicker" data-anim>Act III · 二期规划</div>
-      <h2 class="h-xl" data-anim>平台二期规划：<br>核心能力完善+AI中台建设</h2>
-      <p class="lead" style="margin-top:1vh" data-anim>
-        持续优化，打造更智能的公共服务平台
-      </p>
+<!-- 第7页：二期规划 -->
+<div class="slide dark" id="s6">
+  <div class="chrome"><span>第二幕 · 当前建设成果</span><span>07 / 17</span></div>
+  <div class="frame split-55" style="padding-top:4vh">
+    <div class="col">
+      <div class="kicker">Act III · 二期规划</div>
+      <h2 class="h-xl">平台二期规划：<br>核心能力完善<br>+AI中台建设</h2>
+      <p class="lead" style="margin-top:1.5vh">持续优化，打造更智能的公共服务平台</p>
     </div>
-    <div style="display:flex; flex-direction:column; gap:2vh; margin-top:7vh">
-      <div style="padding:2vh 0; border-top:1px solid rgba(255,255,255,.25)" data-anim>
-        <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(22px,1.1vw); margin-bottom:.8vh">AI技术平台集成</div>
-        <div style="font-family:var(--sans-zh); font-size:max(18px,1.5vw); opacity:.75; line-height:1.6">· 京东大语言模型集成接入<br>· 算力基础设施服务接入<br>· 众数高质量数据集工程平台接入<br>· Harness Engineering智能体开发平台接入<br>· 厦门市级可信数据空间翔安专区接入</div>
+    <div style="display:flex;flex-direction:column;gap:2.5vh;margin-top:6vh">
+      <div style="padding:2vh 0;border-top:1px solid rgba(255,255,255,.2)">
+        <div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(15px,1.2vw,20px);margin-bottom:.8vh">AI技术平台集成</div>
+        <div class="body-zh" style="line-height:1.65">
+          · 京东大语言模型集成接入<br>
+          · 算力基础设施服务接入<br>
+          · 众数高质量数据集工程平台接入<br>
+          · Harness Engineering智能体开发平台接入<br>
+          · 厦门市级可信数据空间翔安专区接入
+        </div>
       </div>
-      <div style="padding:2vh 0; border-top:1px solid rgba(255,255,255,.25)" data-anim>
-        <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(22px,1.1vw); margin-bottom:.8vh">功能完善</div>
-        <div style="font-family:var(--sans-zh); font-size:max(18px,1.5vw); opacity:.75; line-height:1.6">· 完善各类数据资源<br>· 完善企业供需对接体系<br>· 打通企业数据治理及开发服务链条<br>· 数据产品检验认证服务接入<br>· 优化用户界面等</div>
+      <div style="padding:2vh 0;border-top:1px solid rgba(255,255,255,.2)">
+        <div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(15px,1.2vw,20px);margin-bottom:.8vh">功能完善</div>
+        <div class="body-zh" style="line-height:1.65">
+          · 完善各类数据资源<br>
+          · 完善企业供需对接体系<br>
+          · 打通企业数据治理及开发服务链条<br>
+          · 数据产品检验认证服务接入<br>
+          · 优化用户界面等
+        </div>
       </div>
     </div>
   </div>
-  <div class="foot">
-    <div>Page 07 · 当前建设成果 2026.06-12</div>
-    <div>Act II · 二期规划</div>
-  </div>
-</section>
+  <div class="foot"><span>2026.06-12</span><span>Act III · 二期规划</span></div>
+</div>
 
-
-<!-- ============ 第8页：数据要素产业园总体定位（新增） ============ -->
-<section class="slide dark">
-  <div class="chrome">
-    <div>第三幕 · 核心运营模式</div>
-    <div>08 / 17</div>
-  </div>
-  <div class="frame" style="padding-top:5vh">
-    <div class="kicker" data-anim>Act I · Core Positioning</div>
-    <h2 class="h-xl" data-anim>智慧翔安五大核心角色</h2>
-    <p class="lead" style="margin-bottom:5vh" data-anim>
-      建数据要素产业运营闭环
-    </p>
-    
-    <div class="grid-3-3" data-anim>
-      <!-- 角色1 -->
-      <div class="pillar">
-        <div class="ic">01 数据服务集成</div>
-        <div class="d">整合数据治理、确权、评估、融资、交易全流程服务，为企业提供“一站式”数据要素解决方案</div>
-      </div>
-      <!-- 角色2 -->
-      <div class="pillar">
-        <div class="ic">02 产业生态组织者</div>
-        <div class="d">链接政府、企业、资本、智库资源，打造“数据供给-产品开发-场景应用”生态网络</div>
-      </div>
-      <!-- 角色3 -->
-      <div class="pillar">
-        <div class="ic">03 企业数字化服务</div>
-        <div class="d">为企业提供数字化诊断、场景规划、解决方案包装、市场推广全周期服务</div>
-      </div>
-      <!-- 角色4 -->
-      <div class="pillar">
-        <div class="ic">04 场景运营</div>
-        <div class="d">挖掘区域特色场景（工业、海洋、医疗等），打造可复制的数字场景解决方案</div>
-      </div>
-      <!-- 角色5 -->
-      <div class="pillar">
-        <div class="ic">05 数据资产运营</div>
-        <div class="d">帮助企业完成数据资产确权、评估、融资，推动数据资产化、资本化</div>
-      </div>
-      <!-- 总结 -->
-      <div class="pillar" style="border-top:0.5px solid currentColor; padding-top:0.5vh">
+<!-- 第8页：五大核心角色 -->
+<div class="slide dark" id="s7">
+  <div class="chrome"><span>第三幕 · 核心运营模式</span><span>08 / 17</span></div>
+  <div class="frame" style="padding-top:3vh">
+    <div class="kicker">Act I · Core Positioning</div>
+    <h2 class="h-xl" style="margin-bottom:.8vh">智慧翔安五大核心角色</h2>
+    <p class="lead" style="margin-bottom:3vh">建数据要素产业运营闭环</p>
+    <div class="grid-3-3">
+      <div class="pillar"><div class="ic">01 数据服务集成</div><div class="d">整合数据治理、确权、评估、融资、交易全流程服务，为企业提供"一站式"数据要素解决方案</div></div>
+      <div class="pillar"><div class="ic">02 产业生态组织者</div><div class="d">链接政府、企业、资本、智库资源，打造"数据供给-产品开发-场景应用"生态网络</div></div>
+      <div class="pillar"><div class="ic">03 企业数字化服务</div><div class="d">为企业提供数字化诊断、场景规划、解决方案包装、市场推广全周期服务</div></div>
+      <div class="pillar"><div class="ic">04 场景运营</div><div class="d">挖掘区域特色场景（工业、海洋、医疗等），打造可复制的数字场景解决方案</div></div>
+      <div class="pillar"><div class="ic">05 数据资产运营</div><div class="d">帮助企业完成数据资产确权、评估、融资，推动数据资产化、资本化</div></div>
+      <div class="pillar" style="border-top:1px solid rgba(255,255,255,.35)">
         <div class="ic">SUMMARY</div>
-        <div class="t">从“建平台”到“营产业”</div>
+        <div class="t">从"建平台"到"营产业"</div>
         <div class="d">核心目标：形成产业集聚效应，打造国家级数据要素示范园区</div>
       </div>
     </div>
   </div>
-  <div class="foot">
-    <div>Page 08 ·核心运营模式</div>
-    <div>Core Positioning · 2026</div>
-  </div>
-</section>
+  <div class="foot"><span>核心运营模式</span><span>Core Positioning · 2026</span></div>
+</div>
 
-
-
-
-<!-- ============ 第9页：友达合作 - 章节幕封 ============ -->
-<section class="slide light">
-  <div class="chrome">
-    <div>第四幕 · 标杆案例打造</div>
-    <div>09 / 17</div>
-  </div>
-  <div class="frame" style="padding-top:5vh">
-    <div class="kicker" data-anim>Act I · 友达案例打造</div>
-    <h2 class="h-xl" style="margin-bottom:4vh" data-anim>友达案例打造</h2>
-    
-    <div class="grid-3" style="gap:3vw" data-anim>
+<!-- 第9页：友达案例 -->
+<div class="slide light" id="s8">
+  <div class="chrome"><span>第四幕 · 标杆案例打造</span><span>09 / 17</span></div>
+  <div class="frame" style="padding-top:3vh">
+    <div class="kicker">Act I · 友达案例打造</div>
+    <h2 class="h-xl" style="margin-bottom:4vh">友达案例打造</h2>
+    <div class="grid-3" style="gap:3vw">
       <div class="card-3">
-        <div style="font-family:var(--serif-zh); font-weight:700; font-size:2.2vw; margin-bottom:1.2vh">龙头产业主体</div>
-        <div style="font-family:var(--sans-zh); font-size:max(20px,1vw); line-height:1.7; opacity:.82">
-          厦门布局两大生产厂区，在岗员工规模600-1000人，2025年实现产值173亿元，区域产业带动能力突出。
-        </div>
+        <div class="card-title">龙头产业主体</div>
+        <div class="card-desc">厦门布局两大生产厂区，在岗员工规模600-1000人，2025年实现产值173亿元，区域产业带动能力突出。</div>
       </div>
       <div class="card-3">
-        <div style="font-family:var(--serif-zh); font-weight:700; font-size:2.2vw; margin-bottom:1.2vh">AI技术积淀深厚</div>
-        <div style="font-family:var(--sans-zh); font-size:max(20px,1vw); line-height:1.7; opacity:.82">
-          搭建伏羲AI训练平台、洛神智能体系统两大核心数字化底座，工业AI架构完备，全生产场景智能化应用落地成熟。
-        </div>
+        <div class="card-title">AI技术积淀深厚</div>
+        <div class="card-desc">搭建伏羲AI训练平台、洛神智能体系统两大核心数字化底座，工业AI架构完备，全生产场景智能化应用落地成熟。</div>
       </div>
       <div class="card-3">
-        <div style="font-family:var(--serif-zh); font-weight:700; font-size:2.2vw; margin-bottom:1.2vh">深度协同意愿充足</div>
-        <div style="font-family:var(--sans-zh); font-size:max(20px,1vw); line-height:1.7; opacity:.82">
-          企业合作积极性高，可将自有成熟技术产品封装为产业园联合共建成果，并同步开展市场推广与品牌宣传，双向赋能示范项目打造。
-        </div>
+        <div class="card-title">深度协同意愿充足</div>
+        <div class="card-desc">企业合作积极性高，可将自有成熟技术产品封装为产业园联合共建成果，并同步开展市场推广与品牌宣传，双向赋能示范项目打造。</div>
       </div>
     </div>
   </div>
-  <div class="foot">
-    <div>Page 09 · 标杆案例打造</div>
-    <div>Act I · 友达案例</div>
-  </div>
-</section>
+  <div class="foot"><span>标杆案例打造</span><span>Act I · 友达案例</span></div>
+</div>
 
-<!-- ============ 第10页：友达AI技术体系 ============ -->
-<section class="slide dark">
-  <div class="chrome">
-    <div>第四幕 · 标杆案例打造</div>
-    <div>10 / 17</div>
-  </div>
-  <div class="frame grid-2-6-6" style="padding-top:5vh">
-    <div style="display:flex; flex-direction:column; gap:2.5vh; padding-right:2vw; border-right:1px solid rgba(255,255,255,.2)">
-      <div class="kicker" data-anim>Act II · AI智能训练平台</div>
-      <h2 class="h-md" data-anim>伏羲AI训练平台</h2>
-      <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(22px,1.5vw); margin-top:1vh; opacity:.9" data-anim>工业轻量化无代码AI开发平台</div>
-      <p style="font-family:var(--sans-zh); font-size:max(18px,1.5vw); line-height:1.7; opacity:.82" data-anim>
-         · 本地私有化部署，数据不外流、安全性高<br> · 配套数字教练、专项培训服务<br> · 适配机器学习、深度学习、大模型<br> · 自有H20算力部署
-      </p>
+<!-- 第10页：AI技术体系 -->
+<div class="slide dark" id="s9">
+  <div class="chrome"><span>第四幕 · 标杆案例打造</span><span>10 / 17</span></div>
+  <div class="frame grid-2" style="padding-top:4vh;gap:4vw">
+    <div style="display:flex;flex-direction:column;gap:2vh;padding-right:2vw;border-right:1px solid rgba(255,255,255,.18)">
+      <div class="kicker">Act II · AI智能训练平台</div>
+      <h2 class="h-md">伏羲AI训练平台</h2>
+      <div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(15px,1.4vw,22px);opacity:.88">工业轻量化无代码AI开发平台</div>
+      <div class="body-zh" style="line-height:1.7">
+        · 本地私有化部署，数据不外流、安全性高<br>
+        · 配套数字教练、专项培训服务<br>
+        · 适配机器学习、深度学习、大模型<br>
+        · 自有H20算力部署
+      </div>
     </div>
-    <div style="display:flex; flex-direction:column; gap:2.5vh; padding-left:2vw">
-      <div class="kicker" data-anim>Act III ·AI智能训练平台</div>
-      <h2 class="h-md" data-anim>洛神智能体管控系统</h2>
-      <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(22px,1.5vw); margin-top:1vh; opacity:.9" data-anim>工业全流程智能运营中枢</div>
-      <p style="font-family:var(--sans-zh); font-size:max(18px,1.5vw); line-height:1.7; opacity:.75" data-anim>
-         · 已落地60+核心节点<br> · 支持自然语言交互<br> · 自动生成数据看板<br> · 主动识别生产异常<br> · 输出整改方案，自主调整参数
-      </p>
+    <div style="display:flex;flex-direction:column;gap:2vh;padding-left:2vw">
+      <div class="kicker">Act III · AI智能管控系统</div>
+      <h2 class="h-md">洛神智能体管控系统</h2>
+      <div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(15px,1.4vw,22px);opacity:.88">工业全流程智能运营中枢</div>
+      <div class="body-zh" style="line-height:1.7">
+        · 已落地60+核心节点<br>
+        · 支持自然语言交互<br>
+        · 自动生成数据看板<br>
+        · 主动识别生产异常<br>
+        · 输出整改方案，自主调整参数
+      </div>
     </div>
   </div>
-  <div class="foot">
-    <div>Page 10 · 标杆案例打造</div>
-    <div>Act II ·AI智能训练平台</div>
-  </div>
-</section>
+  <div class="foot"><span>标杆案例打造</span><span>Act II · AI智能平台</span></div>
+</div>
 
-
-<!-- ============ 第11页：合作模式创新 ============ -->
-<section class="slide light">
-  <div class="chrome">
-    <div>第四幕 · 标杆案例打造</div>
-    <div>11 / 17</div>
-  </div>
-  <div class="frame" style="padding-top:5vh">
-    <div class="kicker" data-anim>Act III · 三方共建联合实验室</div>
-    <h2 class="h-xl" style="margin-bottom:8vh" data-anim>共建工业具身智能联合实验室</h2>
-    
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:3vw; flex:1; align-content:start" data-anim>
-      <div style="padding:3vh 1.5vw; border-top:2px solid currentColor">
-        <div style="font-family:var(--serif-zh); font-weight:700; font-size:2vw; margin-bottom:1.5vh">友达光电</div>
-        <div style="font-family:var(--sans-zh); font-size:max(18px,1vw); line-height:1.7; opacity:.82">
+<!-- 第11页：三方共建联合实验室 -->
+<div class="slide light" id="s10">
+  <div class="chrome"><span>第四幕 · 标杆案例打造</span><span>11 / 17</span></div>
+  <div class="frame" style="padding-top:3vh">
+    <div class="kicker">Act III · 三方共建联合实验室</div>
+    <h2 class="h-xl" style="margin-bottom:5vh">共建工业具身智能联合实验室</h2>
+    <div class="grid-3" style="gap:3vw;flex:1;align-content:start">
+      <div style="padding:2.5vh 1.5vw;border-top:2px solid currentColor">
+        <div style="font-family:var(--serif-zh);font-weight:700;font-size:clamp(16px,1.8vw,26px);margin-bottom:1.2vh">友达光电</div>
+        <div class="body-zh" style="line-height:1.7">
           1. 开放产线真实场景，提供工业机器人等硬件载体<br>
           2. 输出伏羲、洛神AI智能平台与算法团队<br>
           3. 负责具身智能模型的技术验证与迭代优化<br>
           4. 联合智慧翔安完成解决方案的产线落地测试
         </div>
       </div>
-      <div style="padding:5vh 1.5vw; border-top:2px solid currentColor">
-        <div style="font-family:var(--serif-zh); font-weight:700; font-size:2vw; margin-bottom:1.5vh">中国电信</div>
-        <div style="font-family:var(--sans-zh); font-size:max(18px,1vw); line-height:1.7; opacity:.82">
+      <div style="padding:2.5vh 1.5vw;border-top:2px solid currentColor">
+        <div style="font-family:var(--serif-zh);font-weight:700;font-size:clamp(16px,1.8vw,26px);margin-bottom:1.2vh">中国电信</div>
+        <div class="body-zh" style="line-height:1.7">
           1. 部署实验室专属GPU算力集群支撑智能模型<br>
           2. 搭建5G专网，提供低时延、高可靠的数据传输<br>
           3. 构建全链路数据安全体系，保障数据资产安全<br>
           4. 为后续园区复制提供标准化网络与算力解决方案
         </div>
       </div>
-      <div style="padding:5vh 1.5vw; border-top:2px solid currentColor">
-        <div style="font-family:var(--serif-zh); font-weight:700; font-size:2vw; margin-bottom:1.5vh">智慧翔安</div>
-        <div style="font-family:var(--sans-zh); font-size:max(18px,1vw); line-height:1.7; opacity:.82">
+      <div style="padding:2.5vh 1.5vw;border-top:2px solid currentColor">
+        <div style="font-family:var(--serif-zh);font-weight:700;font-size:clamp(16px,1.8vw,26px);margin-bottom:1.2vh">智慧翔安</div>
+        <div class="body-zh" style="line-height:1.7">
           1. 统筹日常运营，牵头申报各级专项政策与资金<br>
           2. 挖掘企业数字化需求，形成场景清单<br>
           3. 联动技术与企业需求，定制化具身智能解决方案<br>
           4. 负责包装宣传与市场推广，推动解决方案复制<br>
-          5. 整合生态资源，打通“技术研发-场景验证-产业落地”全链路
+          5. 整合生态资源，打通"技术研发-场景验证-产业落地"全链路
         </div>
       </div>
     </div>
   </div>
-  <div class="foot">
-    <div>Page 11 · 标杆案例打造</div>
-    <div>Act III · 三方共建联合实验室</div>
-  </div>
-</section>
+  <div class="foot"><span>标杆案例打造</span><span>Act III · 三方共建联合实验室</span></div>
+</div>
 
-<!-- ============ 第12页：落地路径 ============ -->
-<section class="slide dark">
-  <div class="chrome">
-    <div>第四幕 · 标杆案例打造</div>
-    <div>12 / 17</div>
-  </div>
-  <div class="frame" style="padding-top:5vh">
-    <div class="kicker" data-anim>Act IV · 实施路径</div>
-    <h2 class="h-xl" style="margin-bottom:3vh" data-anim>从简单场景切入，<br>快速验证可行性</h2>
-    
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:2vw; flex:1" data-anim>
-      <div style="padding:2vh 1.5vw; border-top:1px solid rgba(255,255,255,.3)">
-        <div style="font-family:var(--mono); font-size:max(18px,.85vw); letter-spacing:.2em; text-transform:uppercase; opacity:.6; margin-bottom:1vh">第一阶段</div>
-        <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(16px,1.2vw); margin-bottom:1vh">2026年6-8月</div>
-        <div style="font-family:var(--sans-zh); font-size:max(18px,1vw); line-height:1.6; opacity:.82">
-                   友达提供成熟轮型机器人产品与技术支持；<br>智慧翔安完成产品标准化包装，打造“园区联合研发”标杆形象，进行联合宣传推广
-        </div>
-      </div>
-      <div style="padding:2vh 1.5vw; border-top:1px solid rgba(255,255,255,.3)">
-        <div style="font-family:var(--mono); font-size:max(18px,.85vw); letter-spacing:.2em; text-transform:uppercase; opacity:.6; margin-bottom:1vh">第二阶段</div>
-        <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(16px,1.2vw); margin-bottom:1vh">2026年9-11月</div>
-        <div style="font-family:var(--sans-zh); font-size:max(18px,1vw); line-height:1.6; opacity:.82">
-          友达完成Shuttle Bus、AMR+ORK搬运场景的产线验证与技术迭代；<br>智慧翔安分析产品应用场景，挖掘企业需求，提供资源支持并合作落实场景解决方案
-        </div>
-      </div>
-      <div style="padding:2vh 1.5vw; border-top:1px solid rgba(255,255,255,.3)">
-        <div style="font-family:var(--mono); font-size:max(18px,.85vw); letter-spacing:.2em; text-transform:uppercase; opacity:.6; margin-bottom:1vh">第三阶段</div>
-        <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(16px,1.2vw); margin-bottom:1vh">2026年12月-2027年</div>
-        <div style="font-family:var(--sans); font-size:max(18px,1vw); line-height:1.6; opacity:.82">
-          联合研发灵巧手产品，亮相11月底厦门市智能制造展；<br>智慧翔安主导形成可对外输出的标准化服务体系，申报市级智能制造专项，形成可复制的工业具身智能解决方案
-        </div>
-      </div>
-    </div>
-    
-    <div style="margin-top:3vh; padding:1.5vh 2vw; border:1px solid rgba(255,255,255,.2); border-radius:4px; font-family:var(--sans-zh); font-size:max(12px,1vw); opacity:.75" data-anim>
-      <i data-lucide="info" class="ico-sm" style="margin-right:.5vw"></i>
-      成本回收：政府专项补贴 + 项目收益 + 对外复制推广逐步覆盖
-    </div>
-  </div>
-  <div class="foot">
-    <div>Page 12 · 标杆案例打造</div>
-    <div>Act IV · 实施路径</div>
-  </div>
-</section>
-
-
-<!-- ============ 第13页：示范效应 - 章节幕封 ============ -->
-<section class="slide light">
-  <div class="chrome">
-    <div>第四幕 · 标杆案例打造</div>
-    <div>13 / 17</div>
-  </div>
-  <div class="frame" style="padding-top:5vh">
-    <div class="kicker" data-anim>Act V · 翔炬投标杆案例</div>
-    <h2 class="h-xl" style="margin-bottom:4vh" data-anim>区域数字产业招商载体</h2>
-    
-    <div class="grid-3" style="gap:3vw" data-anim>
-      <div class="card-3">
-        <div style="font-family:var(--serif-zh); font-weight:700; font-size:1.8vw; margin-bottom:1.2vh">翔炬投需求</div>
-        <div style="font-family:var(--sans-zh); font-size:max(20px,1vw); line-height:1.7; opacity:.82">
-          招商引资 · 产业宣传 · 项目展示 · 企业导流
-        </div>
-      </div>
-      <div class="card-3">
-        <div style="font-family:var(--serif-zh); font-weight:700; font-size:1.8vw; margin-bottom:1.2vh">智慧翔安</div>
-        <div style="font-family:var(--sans-zh); font-size:max(20px,1vw); line-height:1.7; opacity:.82">
-          产业园平台 · 宣传矩阵 · 案例包装 · 资源整合 · 品牌推广
-        </div>
-      </div>
-      <div class="card-3">
-        <div style="font-family:var(--serif-zh); font-weight:700; font-size:1.8vw; margin-bottom:1.2vh">预期成果</div>
-        <div style="font-family:var(--sans-zh); font-size:max(20px,1vw); line-height:1.7; opacity:.82">
-          提升区域影响力 · 增强产业吸引力 · 吸引企业入驻 · 形成招商抓手
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="foot">
-    <div>Page 13 · 标杆案例打造</div>
-    <div>Act V · 翔炬投标杆案例<//div>
-  </div>
-</section>
-
-
-<!-- ============ 第14页：后续运营规划 ============ -->
-<section class="slide light">
-  <div class="chrome">
-    <div>第五幕 · 后续运营规划</div>
-    <div>14 / 17</div>
-  </div>
+<!-- 第12页：落地路径 -->
+<div class="slide dark" id="s11">
+  <div class="chrome"><span>第四幕 · 标杆案例打造</span><span>12 / 17</span></div>
   <div class="frame" style="padding-top:3vh">
-    <div class="kicker" data-anim>Act I · 运营思路</div>
-    <h2 class="h-xl" style="margin-bottom:2vh" data-anim>一条主线+两大融入+三大抓手</h2>
-    
-    <div style="display:flex; flex-direction:column; gap:3vh; flex:1; justify-content:center" data-anim>
-      <div style="padding:2vh 2vw; border-left:3px solid currentColor">
-        <div style="font-family:var(--mono); font-size:max(16px,.85vw); letter-spacing:.2em; text-transform:uppercase; opacity:.6; margin-bottom:1vh">一条主线</div>
-        <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(20px,1.2vw)">数据全周期公共服务</div>
-        <div style="font-family:var(--sans-zh); font-size:max(18px,1vw); opacity:.78; margin-top:.5vh; line-height:1.6">
-          数据采集整合 → 标准化治理 → 算法建模 → 合规确权 → 数据产品开发 → 资产价值评估 → 数据融资 → 交易流通 → 场景复制
-        </div>
+    <div class="kicker">Act IV · 实施路径</div>
+    <h2 class="h-xl" style="margin-bottom:3vh">从简单场景切入，<br>快速验证可行性</h2>
+    <div class="grid-3" style="gap:2vw;flex:1">
+      <div style="padding:2vh 1.5vw;border-top:1px solid rgba(255,255,255,.3)">
+        <div class="meta" style="margin-bottom:.8vh">第一阶段</div>
+        <div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(14px,1.2vw,19px);margin-bottom:.8vh">2026年6-8月</div>
+        <div class="body-zh" style="line-height:1.65">友达提供成熟轮型机器人产品与技术支持；<br>智慧翔安完成产品标准化包装，打造"园区联合研发"标杆形象，进行联合宣传推广</div>
       </div>
-      <div style="padding:2vh 2vw; border-left:3px solid currentColor">
-        <div style="font-family:var(--mono); font-size:max(16px,.85vw); letter-spacing:.2em; text-transform:uppercase; opacity:.6; margin-bottom:1vh">两大融入</div>
-        <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(20px,1.2vw)">融入全省改革 + 融入市级体系</div>
-        <div style="font-family:var(--sans-zh); font-size:max(18px,1vw); opacity:.78; margin-top:.5vh; line-height:1.6">
-          融入全省数据要素市场化改革 · 融入厦门市人工智能赋能平台与可信数据空间体系
-        </div>
+      <div style="padding:2vh 1.5vw;border-top:1px solid rgba(255,255,255,.3)">
+        <div class="meta" style="margin-bottom:.8vh">第二阶段</div>
+        <div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(14px,1.2vw,19px);margin-bottom:.8vh">2026年9-11月</div>
+        <div class="body-zh" style="line-height:1.65">友达完成Shuttle Bus、AMR+ORK搬运场景的产线验证与技术迭代；<br>智慧翔安分析产品应用场景，挖掘企业需求，提供资源支持并合作落实场景解决方案</div>
       </div>
-      <div style="padding:2vh 2vw; border-left:3px solid currentColor">
-        <div style="font-family:var(--mono); font-size:max(16px,.85vw); letter-spacing:.2em; text-transform:uppercase; opacity:.6; margin-bottom:1vh">三大抓手</div>
-        <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(20px,1.2vw)">公共服务平台 + 产业集群培育 + 传统产业赋能</div>
-        <div style="font-family:var(--sans-zh); font-size:max(18px,1vw); opacity:.78; margin-top:.5vh; line-height:1.6">
-         运营数据要素一站式服务平台；培育以工业制造、医疗健康为标杆特色的产业集群；赋能传统中小型制造业数字化转型，打造可复制标杆案例
+      <div style="padding:2vh 1.5vw;border-top:1px solid rgba(255,255,255,.3)">
+        <div class="meta" style="margin-bottom:.8vh">第三阶段</div>
+        <div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(14px,1.2vw,19px);margin-bottom:.8vh">2026年12月-2027年</div>
+        <div class="body-zh" style="line-height:1.65">联合研发灵巧手产品，亮相11月底厦门市智能制造展；<br>智慧翔安主导形成可对外输出的标准化服务体系，申报市级智能制造专项，形成可复制的工业具身智能解决方案</div>
       </div>
     </div>
-  </div>
-  <div class="foot">
-    <div>Page 14 · 运营思路框架</div>
-    <div>Act I · 后续运营规划</div>
-  </div>
-</section>
-
-<!-- ============ 第15页：短期目标 ============ -->
-<section class="slide dark">
-  <div class="chrome">
-    <div>第五幕 · 后续运营规划</div>
-    <div>15 / 17</div>
-  </div>
-  <div class="frame" style="padding-top:5vh">
-    <div class="kicker" data-anim>Act II · 短期目标</div>
-    <h2 class="h-xl" style="margin-bottom:5vh" data-anim>短期目标与具体工作</h2>
-
-    <div style="display:flex; flex-direction:column; gap:0; flex:1" data-anim>
-      <div class="rowline">
-        <div class="k">01</div>
-        <div class="v">完成公共服务平台2.0建设（数据补充、功能完善，各大平台对接）</div>
-      </div>
-      <div class="rowline">
-        <div class="k">02</div>
-        <div class="v">数据资源池产品的应用场景细分打造</div>
-      </div>
-      <div class="rowline">
-        <div class="k">03</div>
-        <div class="v">对接3-5家重点培育企业（如茶蕊）</div>
-      </div>
-      <div class="rowline">
-        <div class="k">04</div>
-        <div class="v">持续打造友达光电具身智能联合实验室与翔炬投招商宣传标杆案例</div>
-      </div>
-      <div class="rowline">
-        <div class="k">05</div>
-        <div class="v">完成公众号、小程序开发和上线</div>
-      </div>
-      <div class="rowline">
-        <div class="k">06</div>
-        <div class="v">持续建设专业化运营团队，开发系统化运营管理体系</div>
-      </div>
+    <div style="margin-top:2.5vh;padding:1.2vh 2vw;border:1px solid rgba(255,255,255,.18);border-radius:4px;font-size:clamp(12px,.95vw,15px);opacity:.72">
+      ℹ 成本回收：政府专项补贴 + 项目收益 + 对外复制推广逐步覆盖
     </div>
   </div>
-  <div class="foot">
-    <div>Page 15 ·后续运营规划 2026.06-12</div>
-    <div>Act II · 短期目标</div>
-  </div>
-</section>
+  <div class="foot"><span>标杆案例打造</span><span>Act IV · 实施路径</span></div>
+</div>
 
-<!-- ============ 第18页：中长期规划 ============ -->
-<section class="slide light">
-  <div class="chrome">
-    <div>第五幕 · 后续运营规划</div>
-    <div>16 / 17</div>
-  </div>
+<!-- 第13页：翔炬投案例 -->
+<div class="slide light" id="s12">
+  <div class="chrome"><span>第四幕 · 标杆案例打造</span><span>13 / 17</span></div>
   <div class="frame" style="padding-top:3vh">
-    <div class="kicker" data-anim>Act III · 中长期规划</div>
-    <h2 class="h-xl" style="margin-bottom:5vh" data-anim>标准化+产业化+生态化</h2>
-    
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:4vh 4vw; flex:1; align-content:start" data-anim>
+    <div class="kicker">Act V · 翔炬投标杆案例</div>
+    <h2 class="h-xl" style="margin-bottom:4vh">区域数字产业招商载体</h2>
+    <div class="grid-3" style="gap:3vw">
+      <div class="card-3">
+        <div class="card-title">翔炬投需求</div>
+        <div class="card-desc">招商引资 · 产业宣传 · 项目展示 · 企业导流</div>
+      </div>
+      <div class="card-3">
+        <div class="card-title">智慧翔安</div>
+        <div class="card-desc">产业园平台 · 宣传矩阵 · 案例包装 · 资源整合 · 品牌推广</div>
+      </div>
+      <div class="card-3">
+        <div class="card-title">预期成果</div>
+        <div class="card-desc">提升区域影响力 · 增强产业吸引力 · 吸引企业入驻 · 形成招商抓手</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>标杆案例打造</span><span>Act V · 翔炬投标杆案例</span></div>
+</div>
+
+<!-- 第14页：运营思路 -->
+<div class="slide light" id="s13">
+  <div class="chrome"><span>第五幕 · 后续运营规划</span><span>14 / 17</span></div>
+  <div class="frame" style="padding-top:3vh">
+    <div class="kicker">Act I · 运营思路</div>
+    <h2 class="h-xl" style="margin-bottom:2.5vh">一条主线+两大融入+三大抓手</h2>
+    <div style="display:flex;flex-direction:column;gap:2.5vh;flex:1;justify-content:center">
+      <div class="strip">
+        <div class="meta" style="margin-bottom:.8vh">一条主线</div>
+        <div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(15px,1.3vw,20px)">数据全周期公共服务</div>
+        <div class="body-zh" style="margin-top:.5vh">数据采集整合 → 标准化治理 → 算法建模 → 合规确权 → 数据产品开发 → 资产价值评估 → 数据融资 → 交易流通 → 场景复制</div>
+      </div>
+      <div class="strip">
+        <div class="meta" style="margin-bottom:.8vh">两大融入</div>
+        <div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(15px,1.3vw,20px)">融入全省改革 + 融入市级体系</div>
+        <div class="body-zh" style="margin-top:.5vh">融入全省数据要素市场化改革 · 融入厦门市人工智能赋能平台与可信数据空间体系</div>
+      </div>
+      <div class="strip">
+        <div class="meta" style="margin-bottom:.8vh">三大抓手</div>
+        <div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(15px,1.3vw,20px)">公共服务平台 + 产业集群培育 + 传统产业赋能</div>
+        <div class="body-zh" style="margin-top:.5vh">运营数据要素一站式服务平台；培育以工业制造、医疗健康为标杆特色的产业集群；赋能传统中小型制造业数字化转型，打造可复制标杆案例</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>运营思路框架</span><span>Act I · 后续运营规划</span></div>
+</div>
+
+<!-- 第15页：短期目标 -->
+<div class="slide dark" id="s14">
+  <div class="chrome"><span>第五幕 · 后续运营规划</span><span>15 / 17</span></div>
+  <div class="frame" style="padding-top:3vh">
+    <div class="kicker">Act II · 短期目标</div>
+    <h2 class="h-xl" style="margin-bottom:4vh">短期目标与具体工作</h2>
+    <div style="display:flex;flex-direction:column;flex:1">
+      <div class="rowline"><div class="k">01</div><div class="v">完成公共服务平台2.0建设（数据补充、功能完善，各大平台对接）</div></div>
+      <div class="rowline"><div class="k">02</div><div class="v">数据资源池产品的应用场景细分打造</div></div>
+      <div class="rowline"><div class="k">03</div><div class="v">对接3-5家重点培育企业（如茶蕊）</div></div>
+      <div class="rowline"><div class="k">04</div><div class="v">持续打造友达光电具身智能联合实验室与翔炬投招商宣传标杆案例</div></div>
+      <div class="rowline"><div class="k">05</div><div class="v">完成公众号、小程序开发和上线</div></div>
+      <div class="rowline"><div class="k">06</div><div class="v">持续建设专业化运营团队，开发系统化运营管理体系</div></div>
+    </div>
+  </div>
+  <div class="foot"><span>后续运营规划 2026.06-12</span><span>Act II · 短期目标</span></div>
+</div>
+
+<!-- 第16页：中长期规划 -->
+<div class="slide light" id="s15">
+  <div class="chrome"><span>第五幕 · 后续运营规划</span><span>16 / 17</span></div>
+  <div class="frame" style="padding-top:3vh">
+    <div class="kicker">Act III · 中长期规划</div>
+    <h2 class="h-xl" style="margin-bottom:4vh">标准化+产业化+生态化</h2>
+    <div class="grid-2" style="gap:3vw 5vw;flex:1;align-content:start">
       <div>
-        <div style="font-family:var(--serif-zh); font-weight:700; font-size:1.6vw; margin-bottom:1.5vh; padding-bottom:1vh; border-bottom:2px solid currentColor">中期目标</div>
-        <div style="font-family:var(--sans-zh); font-size:max(16px,1vw); line-height:1.7; opacity:.82">
+        <div style="font-family:var(--serif-zh);font-weight:700;font-size:clamp(15px,1.5vw,22px);margin-bottom:1.2vh;padding-bottom:.8vh;border-bottom:2px solid currentColor">中期目标</div>
+        <div class="body-zh" style="line-height:1.7">
           ▸ 平台运营：完成模型公共服务平台标准化建设，集成京东/众数等3-5个通用/行业大模型，建立可信数据空间翔安专区，同步上架高质量数据集、开发测试工具、评测及生态运营线上服务模块<br>
           ▸ 企业服务：入库企业20家，打造2个省级典型应用场景，培育3-5个标杆企业<br>
           ▸ 团队建设：建立以5-10人为核心的规范化专业运营团队
         </div>
       </div>
       <div>
-        <div style="font-family:var(--serif-zh); font-weight:700; font-size:1.6vw; margin-bottom:1.5vh; padding-bottom:1vh; border-bottom:2px solid currentColor">长期目标</div>
-        <div style="font-family:var(--sans-zh); font-size:max(16px,1vw); line-height:1.7; opacity:.82">
-          ▸ 平台运营：平台汇集100家以上企业数据，通过隐私保护计算、区块链、数据控制、数据加密流通、数据沙箱、可信执行环境等数据流通技术，形成数据规模化在线流通能力<br>
-          ▸ 企业服务：支撑跨企业主体数据应用，应用场景数量达到5个以上，累计落地有效服务案例数量达标 10 个以上<br>
-          ▸ 产业生态：打造翔安运营模式优势特色，形成可持续运营的商业模式，从智能制造延伸到医疗健康、海洋高新、临空经济，建立多个联合实验室，形成"1+N"联合实验室体系
+        <div style="font-family:var(--serif-zh);font-weight:700;font-size:clamp(15px,1.5vw,22px);margin-bottom:1.2vh;padding-bottom:.8vh;border-bottom:2px solid currentColor">长期目标</div>
+        <div class="body-zh" style="line-height:1.7">
+          ▸ 平台运营：平台汇集100家以上企业数据，通过隐私保护计算、区块链、数据控制等流通技术，形成数据规模化在线流通能力<br>
+          ▸ 企业服务：支撑跨企业主体数据应用，场景数量达到5个以上，累计落地有效服务案例10个以上<br>
+          ▸ 产业生态：打造翔安运营模式优势特色，从智能制造延伸到医疗健康、海洋高新、临空经济，建立多个联合实验室，形成"1+N"体系
         </div>
       </div>
     </div>
-    
-    <div style="margin-top:1vh; padding:1.5vh 2vw; background:rgba(var(--ink-rgb),.05); border-radius:2px" data-anim>
-      <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(13px,1.1vw); margin-bottom:.6vh">"1+N"联合实验室体系</div>
-      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1.5vw; margin-top:1.5vh">
-        <div style="font-family:var(--sans-zh); font-size:max(14px,.9vw); opacity:.78; text-align:center; padding:1vh .5vw">
-          <div style="font-size:2vw; margin-bottom:.5vh">🏭</div>
-          具身智能联合实验室（依托友达）
-        </div>
-        <div style="font-family:var(--sans-zh); font-size:max(14px,.9vw); opacity:.78; text-align:center; padding:1vh .5vw">
-          <div style="font-size:2vw; margin-bottom:.5vh">🏥</div>
-          医疗AI联合实验室（依托翔安医疗产业）
-        </div>
-        <div style="font-family:var(--sans-zh); font-size:max(14px,.9vw); opacity:.78; text-align:center; padding:1vh .5vw">
-          <div style="font-size:2vw; margin-bottom:.5vh">🌊</div>
-          海洋数据联合实验室（依托翔安海洋高新）
-        </div>
-        <div style="font-family:var(--sans-zh); font-size:max(14px,.9vw); opacity:.78; text-align:center; padding:1vh .5vw">
-          <div style="font-size:2vw; margin-bottom:.5vh">✈️</div>
-          临空经济数据实验室（依托翔安机场）
-        </div>
+    <div style="margin-top:2vh;padding:1.5vh 2vw;background:rgba(var(--ink-rgb),.05);border-radius:4px">
+      <div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(13px,1.1vw,18px);margin-bottom:1vh">"1+N"联合实验室体系</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5vw;margin-top:.8vh">
+        <div style="font-size:clamp(12px,.85vw,14px);opacity:.78;text-align:center;padding:.8vh .5vw">🏭<br>具身智能联合实验室（依托友达）</div>
+        <div style="font-size:clamp(12px,.85vw,14px);opacity:.78;text-align:center;padding:.8vh .5vw">🏥<br>医疗AI联合实验室（依托翔安医疗产业）</div>
+        <div style="font-size:clamp(12px,.85vw,14px);opacity:.78;text-align:center;padding:.8vh .5vw">🌊<br>海洋数据联合实验室（依托翔安海洋高新）</div>
+        <div style="font-size:clamp(12px,.85vw,14px);opacity:.78;text-align:center;padding:.8vh .5vw">✈️<br>临空经济数据实验室（依托翔安机场）</div>
       </div>
     </div>
   </div>
-  <div class="foot">
-    <div>Page 16 · 后续运营规划</div>
-    <div>Act III · 中长期规划</div>
-  </div>
-</section>
-
-
-<!-- ============ 第17页：结束页 ============ -->
-<section class="slide hero dark">
-  <div class="chrome">
-    <div>结语 · 恳请支持</div>
-    <div>17 / 17</div>
-  </div>
-  <div class="frame" style="display:grid; gap:3vh; align-content:center; min-height:80vh">
-    <div class="kicker" data-anim>结语 · Closing</div>
-    <h1 class="h-hero" style="font-size:8vw" data-anim>恳请支持与指导</h1>
-    <p class="lead" style="max-width:60vw; margin-top:2vh" data-anim>
-      共同打造国家级数据要素市场化改革标杆
-    </p>
-    
-    <div style="margin-top:3vh; display:flex; flex-direction:column; gap:1vh; max-width:55vw" data-anim>
-      <div style="display:flex; align-items:flex-start; gap:1vw">
-        <i data-lucide="arrow-right" class="ico-md" style="margin-top:.3vh; flex-shrink:0"></i>
-        <div>
-          <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(14px,1.2vw)">政策支持</div>
-          <div style="font-family:var(--sans-zh); font-size:max(12px,1vw); opacity:.78; margin-top:.5vh">在数据企业认定、数据产品确权、跨境数据流通等方面给予政策倾斜</div>
-        </div>
-      </div>
-      <div style="display:flex; align-items:flex-start; gap:1vw">
-        <i data-lucide="arrow-right" class="ico-md" style="margin-top:.3vh; flex-shrink:0"></i>
-        <div>
-          <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(14px,1.2vw)">资金补贴</div>
-          <div style="font-family:var(--sans-zh); font-size:max(12px,1vw); opacity:.78; margin-top:.5vh">在联合实验室建设、AI中台部署、标杆案例打造等方面给予资金支持</div>
-        </div>
-      </div>
-      <div style="display:flex; align-items:flex-start; gap:1vw">
-        <i data-lucide="arrow-right" class="ico-md" style="margin-top:.3vh; flex-shrink:0"></i>
-        <div>
-          <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(14px,1.2vw)">宣传推广</div>
-          <div style="font-family:var(--sans-zh); font-size:max(12px,1vw); opacity:.78; margin-top:.5vh">在各级会议、展会、考察中推荐产业园案例，提升影响力</div>
-        </div>
-      </div>
-      <div style="display:flex; align-items:flex-start; gap:1vw">
-        <i data-lucide="arrow-right" class="ico-md" style="margin-top:.3vh; flex-shrink:0"></i>
-        <div>
-          <div style="font-family:var(--serif-zh); font-weight:600; font-size:max(14px,1.2vw)">资源对接</div>
-          <div style="font-family:var(--sans-zh); font-size:max(12px,1vw); opacity:.78; margin-top:.5vh">推荐更多优质企业入驻产业园，对接更多生态伙伴</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="foot">
-    <div>智慧翔安公司 · 期待您的支持</div>
-    <div>— 2026 —</div>
-  </div>
-</section>
-
+  <div class="foot"><span>后续运营规划</span><span>Act III · 中长期规划</span></div>
 </div>
 
+<!-- 第17页：结束 -->
+<div class="slide hero dark" id="s16">
+  <div class="chrome"><span>结语 · 恳请支持</span><span>17 / 17</span></div>
+  <div class="frame" style="justify-content:center;gap:3vh">
+    <div class="kicker">结语 · Closing</div>
+    <h1 class="h-hero" style="font-size:clamp(42px,7vw,100px)">恳请支持与指导</h1>
+    <p class="lead" style="max-width:58vw;margin-top:2vh">共同打造国家级数据要素市场化改革标杆</p>
+    <div style="margin-top:3vh;display:flex;flex-direction:column;gap:1.8vh;max-width:54vw">
+      <div style="display:flex;align-items:flex-start;gap:1.2vw">
+        <span style="font-size:1.2em;margin-top:.1em;flex-shrink:0">→</span>
+        <div><div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(14px,1.2vw,19px)">政策支持</div><div class="body-zh" style="margin-top:.4vh">在数据企业认定、数据产品确权、跨境数据流通等方面给予政策倾斜</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:1.2vw">
+        <span style="font-size:1.2em;margin-top:.1em;flex-shrink:0">→</span>
+        <div><div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(14px,1.2vw,19px)">资金补贴</div><div class="body-zh" style="margin-top:.4vh">在联合实验室建设、AI中台部署、标杆案例打造等方面给予资金支持</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:1.2vw">
+        <span style="font-size:1.2em;margin-top:.1em;flex-shrink:0">→</span>
+        <div><div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(14px,1.2vw,19px)">宣传推广</div><div class="body-zh" style="margin-top:.4vh">在各级会议、展会、考察中推荐产业园案例，提升影响力</div></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:1.2vw">
+        <span style="font-size:1.2em;margin-top:.1em;flex-shrink:0">→</span>
+        <div><div style="font-family:var(--serif-zh);font-weight:600;font-size:clamp(14px,1.2vw,19px)">资源对接</div><div class="body-zh" style="margin-top:.4vh">推荐更多优质企业入驻产业园，对接更多生态伙伴</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>智慧翔安公司 · 期待您的支持</span><span>— 2026 —</span></div>
+</div>
+
+<!-- ========== 导航 ========== -->
 <div id="nav"></div>
 
 <script>
-/* =============== WebGL 双背景 ===============
-   深色页：Holographic Dispersion（全息色散 · 钛金暗流）—— 彩虹微扰、鼠标径向涟漪
-   浅色页：Spiral Vortex（旋转涡流 · 银色珍珠）—— domain-warp 流动、无中心
-   修改风格请参考 references/webgl-backgrounds.md
-*/
-const VS = `attribute vec2 position;void main(){gl_Position=vec4(position,0.0,1.0);}`;
+// 极简翻页逻辑，零依赖
+(function(){
+  const slides = document.querySelectorAll('.slide');
+  const nav = document.getElementById('nav');
+  const total = slides.length;
+  let cur = 0;
 
-const FS_DARK = `precision highp float;
-uniform vec2 u_resolution;uniform float u_time;uniform vec2 u_mouse;
-vec3 palette(float t,vec3 a,vec3 b,vec3 c,vec3 d){return a+b*cos(6.28318*(c*t+d));}
-void main(){
-  vec2 uv=gl_FragCoord.xy/u_resolution.xy;
-  vec2 p=uv*2.0-1.0;p.x*=u_resolution.x/u_resolution.y;
-  vec2 m=u_mouse*2.0-1.0;m.x*=u_resolution.x/u_resolution.y;
-  float md=length(p-m);
-  float mr=sin(md*15.0-u_time*4.0)*exp(-md*3.0);p+=mr*0.08;
-  vec2 p0=p;
-  for(float i=1.0;i<4.0;i++){
-    p.x+=0.1/i*sin(i*3.0*p.y+u_time*0.4)+0.05;
-    p.y+=0.1/i*cos(i*2.0*p.x+u_time*0.3)-0.05;
-  }
-  float r=length(p);float ang=atan(p.y,p.x);
-  vec3 a=vec3(0.12,0.12,0.13);
-  vec3 b=vec3(0.03,0.04,0.05);
-  vec3 c=vec3(1.0,1.0,1.0);
-  vec3 d=vec3(0.1,0.2,0.4);
-  vec3 col=palette(r*1.5+p0.x*0.5+u_time*0.1,a,b,c,d);
-  float disp=sin(r*25.0-u_time*1.5+ang*2.0)*0.5+0.5;
-  col+=vec3(disp*0.015,disp*0.01,disp*0.02);
-  float hi=pow(sin(p.x*4.0+p.y*3.0+u_time)*0.5+0.5,8.0);
-  col+=hi*0.08;
-  vec3 base=vec3(0.05,0.05,0.06);
-  col=mix(base,col,0.85);
-  gl_FragColor=vec4(col,1.0);
-}`;
-
-const FS_LIGHT = `precision highp float;
-uniform vec2 u_resolution;uniform float u_time;uniform vec2 u_mouse;
-float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
-float noise(vec2 p){
-  vec2 i=floor(p),f=fract(p);
-  float a=hash(i),b=hash(i+vec2(1,0));
-  float c=hash(i+vec2(0,1)),d=hash(i+vec2(1,1));
-  vec2 u=f*f*(3.0-2.0*f);
-  return mix(a,b,u.x)+(c-a)*u.y*(1.0-u.x)+(d-b)*u.x*u.y;
-}
-float fbm(vec2 p){
-  float v=0.0,a=0.5;
-  mat2 m=mat2(0.80,0.60,-0.60,0.80);
-  for(int i=0;i<5;i++){v+=a*noise(p);p=m*p*2.02;a*=0.5;}
-  return v;
-}
-void main(){
-  vec2 uv=gl_FragCoord.xy/u_resolution.xy;
-  vec2 p=uv;p.x*=u_resolution.x/u_resolution.y;
-  vec2 m=u_mouse;m.x*=u_resolution.x/u_resolution.y;
-  vec2 md=p-m;float dl=length(md);
-  p+=normalize(md+vec2(0.0001))*exp(-dl*5.0)*0.03;
-  vec2 q=vec2(fbm(p*1.8+u_time*0.07),fbm(p*1.8+vec2(5.2,1.3)+u_time*0.06));
-  vec2 r=vec2(fbm(p*2.0+q*1.3+vec2(1.7,9.2)+u_time*0.05),
-              fbm(p*2.0+q*1.3+vec2(8.3,2.8)+u_time*0.04));
-  float f=fbm(p*2.2+r*1.5);
-  vec3 silverDark=vec3(0.86,0.85,0.84);
-  vec3 paper=vec3(0.955,0.945,0.925);
-  vec3 col=mix(silverDark,paper,f);
-  float ph=r.x*2.2+u_time*0.35;
-  col+=vec3(0.78,0.62,0.92)*sin(ph)*0.055;
-  col+=vec3(0.55,0.72,0.95)*sin(ph*0.8+2.0)*0.05;
-  float hl=smoothstep(0.48,0.92,f);
-  col+=hl*0.06;
-  gl_FragColor=vec4(col,1.0);
-}`;
-
-const mouse={x:0.5,y:0.5};
-addEventListener('mousemove',e=>{mouse.x=e.clientX/innerWidth;mouse.y=e.clientY/innerHeight});
-
-function bootGL(canvasId, fsSrc){
-  const canvas=document.getElementById(canvasId);
-  const gl=canvas.getContext('webgl',{alpha:false,antialias:true});
-  if(!gl) return ()=>false;
-  const mk=(t,s)=>{const sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);return sh};
-  const prog=gl.createProgram();
-  gl.attachShader(prog,mk(gl.VERTEX_SHADER,VS));
-  gl.attachShader(prog,mk(gl.FRAGMENT_SHADER,fsSrc));
-  gl.linkProgram(prog);gl.useProgram(prog);
-  const buf=gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER,buf);
-  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
-  const pos=gl.getAttribLocation(prog,'position');
-  gl.enableVertexAttribArray(pos);gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);
-  const lRes=gl.getUniformLocation(prog,'u_resolution');
-  const lT=gl.getUniformLocation(prog,'u_time');
-  const lM=gl.getUniformLocation(prog,'u_mouse');
-  const resize=()=>{
-    const d=Math.min(window.devicePixelRatio||1,2);
-    canvas.width=innerWidth*d;canvas.height=innerHeight*d;
-    gl.viewport(0,0,canvas.width,canvas.height);
-  };
-  addEventListener('resize',resize);resize();
-  return (tSec)=>{ 
-    gl.uniform2f(lRes,canvas.width,canvas.height);
-    gl.uniform1f(lT,tSec);
-    gl.uniform2f(lM,mouse.x,1-mouse.y);
-    gl.drawArrays(gl.TRIANGLES,0,6);
-    return true;
-  };
-}
-const drawDark=bootGL('bg-dark',FS_DARK);
-const drawLight=bootGL('bg-light',FS_LIGHT);
-const t0=Date.now();
-(function loop(){
-  const t=(Date.now()-t0)/1000;
-  drawDark(t);drawLight(t);
-  requestAnimationFrame(loop);
-})();
-
-// =============== 导航（翻页 / 圆点 / 键盘 / 滚轮 / 触屏） ===============
-const deck=document.getElementById('deck');
-const slides=deck.querySelectorAll('.slide');
-const nav=document.getElementById('nav');
-let idx=0,total=slides.length,lock=false;
-
-// 关键：矫正 deck 宽度为 total * 100vw，否则翻页会错位
-deck.style.width=(total*100)+'vw';
-
-slides.forEach((s,i)=>{
-  const b=document.createElement('button');
-  b.className='dot';b.dataset.i=i;b.setAttribute('aria-label','Page '+(i+1));
-  b.onclick=()=>go(i);
-  nav.appendChild(b);
-});
-
-function go(n){
-  if(lock)return;
-  idx=Math.max(0,Math.min(total-1,n));
-  deck.style.transform=`translateX(${-idx*100}vw)`;
-  nav.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
-  /* 主题切换：优先读 data-theme，其次从 class（light/dark）推断 */
-  const el=slides[idx];
-  const th=el.dataset.theme || (el.classList.contains('light')?'light':(el.classList.contains('dark')?'dark':'dark'));
-  document.body.classList.toggle('light-bg',th==='light');
-  /* 动效：翻页过渡中段触发当前页的入场动画（由 motion-boot 注册） */
-  if(window.__playSlide) setTimeout(()=>window.__playSlide(idx), 450);
-  lock=true;setTimeout(()=>lock=false,700);
-}
-
-/* =============== ESC 索引视图 =============== */
-let overviewOn=false;
-const ov=document.createElement('div');
-ov.id='overview';
-ov.style.cssText='position:fixed;inset:0;z-index:100;background:rgba(var(--ink-rgb),.92);backdrop-filter:blur(12px);display:none;overflow-y:auto;padding:4vh 4vw';
-document.body.appendChild(ov);
-
-function buildOverview(){
-  ov.innerHTML='';
-  const grid=document.createElement('div');
-  grid.style.cssText='display:grid;grid-template-columns:repeat(4,1fr);gap:2vh 1.6vw;max-width:90vw;margin:0 auto';
-  slides.forEach((s,i)=>{
-    const card=document.createElement('div');
-    card.style.cssText='cursor:pointer;border-radius:6px;overflow:hidden;border:2px solid '+(i===idx?'rgba(var(--paper-rgb),.8)':'rgba(var(--paper-rgb),.15)')+';transition:border-color .2s';
-    card.onmouseenter=()=>card.style.borderColor='rgba(var(--paper-rgb),.6)';
-    card.onmouseleave=()=>card.style.borderColor=i===idx?'rgba(var(--paper-rgb),.8)':'rgba(var(--paper-rgb),.15)';
-    const wrap=document.createElement('div');
-    wrap.style.cssText='width:100%;aspect-ratio:16/9;overflow:hidden;position:relative;pointer-events:none;background:'+(s.classList.contains('light')?'var(--paper)':'var(--ink)');
-    const clone=s.cloneNode(true);
-    clone.style.cssText='width:100vw;height:100vh;transform:scale('+(1/4.5)+');transform-origin:top left;position:absolute;top:0;left:0;pointer-events:none';
-    wrap.appendChild(clone);
-    const label=document.createElement('div');
-    label.style.cssText='padding:6px 10px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--paper);opacity:.7';
-    label.textContent=(i+1)+' / '+total;
-    card.appendChild(wrap);
-    card.appendChild(label);
-    card.onclick=()=>{toggleOverview();go(i)};
-    grid.appendChild(card);
+  // 初始化位置（绝对定位 + translate）
+  slides.forEach((s, i) => {
+    s.style.transform = 'translateX(' + (i * 100) + 'vw)';
+    // 预渲染位置，避免首帧闪
   });
-  ov.appendChild(grid);
-}
 
-function toggleOverview(){
-  overviewOn=!overviewOn;
-  if(overviewOn){buildOverview();ov.style.display='block';}
-  else{ov.style.display='none';}
-}
+  // 构建导航点
+  slides.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.className = 'dot';
+    b.setAttribute('aria-label', 'Page ' + (i + 1));
+    b.onclick = () => go(i);
+    nav.appendChild(b);
+  });
 
-addEventListener('keydown',e=>{
-  if(e.key==='Escape'){e.preventDefault();toggleOverview();return;}
-  if(overviewOn)return;
-  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '||e.key==='ArrowDown'){
-    if(window.__pipeAdvance && window.__pipeAdvance()) return;
-    go(idx+1);
-    return;
-  }
-  if(e.key==='ArrowLeft'||e.key==='PageUp'||e.key==='ArrowUp')go(idx-1);
-  if(e.key==='Home')go(0);
-  if(e.key==='End')go(total-1);
-});
+  function go(n) {
+    n = Math.max(0, Math.min(total - 1, n));
+    const prev = cur;
+    cur = n;
 
-let wheelTO=null,wheelAcc=0;
-addEventListener('wheel',e=>{
-  wheelAcc+=e.deltaY+e.deltaX;
-  if(Math.abs(wheelAcc)>50){
-    if(wheelAcc>0 && window.__pipeAdvance && window.__pipeAdvance()){
-      wheelAcc=0;
-    }else{
-      go(idx+(wheelAcc>0?1:-1));wheelAcc=0;
-    }
-  }
-  clearTimeout(wheelTO);wheelTO=setTimeout(()=>wheelAcc=0,150);
-},{passive:true});
-
-let tx=0,ty=0;
-addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
-addEventListener('touchend',e=>{
-  const dx=(e.changedTouches[0].clientX-tx);
-  const dy=(e.changedTouches[0].clientY-ty);
-  if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){
-    if(dx<0 && window.__pipeAdvance && window.__pipeAdvance()) return;
-    go(idx+(dx<0?1:-1));
-  }
-},{passive:true});
-
-go(0);
-</script>
-<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-<script>lucide.createIcons();</script>
-
-<!-- ============ Motion One 动效引擎（本地优先,CDN 兜底） ============
-     加载策略:先 ./assets/motion.min.js(本地,离线可用),失败 fallback 到 jsDelivr CDN
-     加载完成后挂 window.__playSlide / window.__pipeAdvance,
-     导航脚本会在翻页中段调用 __playSlide(idx),键盘/滚轮/触屏会在翻页前调用 __pipeAdvance()
-     双双失败时会兜底把所有 [data-anim] 设为可见,不让动效破坏阅读
--->
-<script type="module">
-let motion;
-try {
-  motion = await import('./assets/motion.min.js');
-} catch(e1) {
-  try {
-    motion = await import('https://cdn.jsdelivr.net/npm/motion@11.11.17/+esm');
-  } catch(e2) {
-    console.warn('[motion] local + CDN both failed, disabling animations', e1, e2);
-    document.querySelectorAll('[data-anim]').forEach(el=>{el.style.opacity='1';el.style.transform='none'});
-    document.querySelectorAll('[data-animate="pipeline"] [data-anim]').forEach(el=>el.style.opacity='1');
-  }
-}
-
-if(motion){
-  const { animate, stagger } = motion;
-  document.body.classList.add('motion-ready');
-  const EASE = [.22, 1, .36, 1];
-  const slides = [...document.querySelectorAll('.slide')];
-  let pipeStep = -1;
-  let lastIdx = -1;
-
-  function resetAnims(slide){
-    slide.querySelectorAll('[data-anim]').forEach(el=>{
-      el.style.opacity='';
-      el.style.transform='';
+    // 只移动前后相邻 + 当前（最小重排）
+    slides.forEach((s, i) => {
+      const offset = (i - cur) * 100;
+      s.style.transform = 'translateX(' + offset + 'vw)';
     });
+
+    nav.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+
+    // light/dark 背景同步
+    const isLight = slides[cur].classList.contains('light');
+    document.body.classList.toggle('light-page', isLight);
   }
 
-  function playSlide(i){
-    const slide = slides[i];
-    if(!slide) return;
-    lastIdx = i;
-    const recipe = slide.dataset.animate || (slide.classList.contains('hero') ? 'hero' : 'cascade');
+  // 键盘
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ' || e.key === 'ArrowDown') {
+      e.preventDefault(); go(cur + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key === 'ArrowUp') {
+      e.preventDefault(); go(cur - 1);
+    } else if (e.key === 'Home') go(0);
+    else if (e.key === 'End') go(total - 1);
+  });
 
-    if(recipe === 'pipeline'){
-      pipeStep = -1;
-      slide.querySelectorAll('[data-anim]').forEach(el=>{
-        el.style.opacity='0.15';
-        el.style.transform='none';
-      });
-      return;
-    }
+  // 滚轮
+  let wAcc = 0, wTimer = null;
+  document.addEventListener('wheel', e => {
+    wAcc += e.deltaY + e.deltaX;
+    if (Math.abs(wAcc) > 60) { go(cur + (wAcc > 0 ? 1 : -1)); wAcc = 0; }
+    clearTimeout(wTimer); wTimer = setTimeout(() => wAcc = 0, 200);
+  }, { passive: true });
 
-    resetAnims(slide);
-    const all = [...slide.querySelectorAll('[data-anim]')];
-    if(!all.length) return;
+  // 触屏
+  let tx = 0;
+  document.addEventListener('touchstart', e => tx = e.touches[0].clientX, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 50) go(cur + (dx < 0 ? 1 : -1));
+  }, { passive: true });
 
-    if(recipe === 'directional'){
-      const lefts  = all.filter(el=>el.dataset.anim==='left');
-      const divs   = all.filter(el=>el.dataset.anim==='divider');
-      const rights = all.filter(el=>el.dataset.anim==='right');
-      const others = all.filter(el=>!['left','right','divider'].includes(el.dataset.anim));
-      if(others.length) animate(others, {opacity:[0,1], y:[12,0]}, {duration:.6, delay:stagger(.1, {start:.15}), easing:EASE});
-      if(lefts.length)  animate(lefts,  {opacity:[0,1], x:[-24,0]}, {duration:.8, delay:.35, easing:EASE});
-      if(divs.length)   animate(divs,   {opacity:[0,.25]},          {duration:.5, delay:.9});
-      if(rights.length) animate(rights, {opacity:[0,1], x:[24,0]},  {duration:.8, delay:1.0, easing:EASE});
-      return;
-    }
-
-    if(recipe === 'quote'){
-      const lines = all.filter(el=>el.dataset.anim==='line');
-      const others = all.filter(el=>el.dataset.anim!=='line');
-      if(others.length) animate(others, {opacity:[0,1], y:[8,0]},    {duration:.6, delay:stagger(.12, {start:.2}), easing:EASE});
-      if(lines.length)  animate(lines,  {opacity:[.35,1], y:[10,0]}, {duration:.8, delay:stagger(.55, {start:.5}), easing:EASE});
-      return;
-    }
-
-    if(recipe === 'hero'){
-      animate(all, {opacity:[0,1], y:[14,0]}, {duration:.9, delay:stagger(.16, {start:.2}), easing:EASE});
-      return;
-    }
-
-    // default: cascade
-    animate(all, {opacity:[0,1], y:[16,0]}, {duration:.75, delay:stagger(.1, {start:.15}), easing:EASE});
-  }
-
-  function pipeAdvance(){
-    const slide = slides[lastIdx];
-    if(!slide || slide.dataset.animate !== 'pipeline') return false;
-    const steps  = [...slide.querySelectorAll('[data-anim="step"]')];
-    const arrows = [...slide.querySelectorAll('[data-anim="arrow"]')];
-    if(pipeStep >= steps.length - 1) return false;
-    pipeStep++;
-    animate(steps[pipeStep], {opacity:[0.15,1], y:[8,0]}, {duration:.5, easing:EASE});
-    if(pipeStep > 0 && arrows[pipeStep-1]){
-      animate(arrows[pipeStep-1], {opacity:[0.15,.7]}, {duration:.3, delay:.15});
-    }
-    return true;
-  }
-
-  window.__playSlide = playSlide;
-  window.__pipeAdvance = pipeAdvance;
-
-  // 首屏:go(0) 已跑过(同步),没来得及触发动效 → 这里补一下
-  playSlide(0);
-}
+  go(0);
+})();
 </script>
 </body>
 </html>
